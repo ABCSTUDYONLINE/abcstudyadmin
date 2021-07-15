@@ -8,7 +8,7 @@ import Sidebar from '../sidebar/Sidebar'
 import useStyles from './styles'    
 import { Route, Switch } from "react-router-dom";
 import Categories from '../../pages/categories/Categories'
-import Courses from '../../pages/sourses/Courses'
+import Sourses from '../../pages/sourses/Sourses'
 import Users from '../../pages/users/Users'
 
 const theme = createTheme({
@@ -56,7 +56,7 @@ export default function Layout(props) {
             <div className={classes.toolbar} />   
             <Switch>
                 <Route exact path="/" component={Categories}/>
-                <Route exact path="/sourses" component={Courses}/>
+                <Route exact path="/sourses" component={Sourses}/>
                 <Route exact path="/users" component={Users}/>
             </Switch>
         </div>

@@ -8,8 +8,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: '#808080',
-    zindex:5,
+    backgroundColor: '#262621',
+    zindex:80,
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   menuLink:{
     textDecoration:'none',
     color: theme.palette.background.default,
-  }
+  },
 }))
 
 export default useStyles

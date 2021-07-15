@@ -1,5 +1,5 @@
 import Categories from '../../pages/categories/Categories'
-import Sourses from '../../pages/sourses/Courses'
+import Sourses from '../../pages/sourses/Sourses'
 import Users from '../../pages/users/Users'
 
 import {

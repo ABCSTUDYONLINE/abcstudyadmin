@@ -4,28 +4,28 @@ import Sourses from 'src/pages/sourses/index.js';
 import Users from 'src/pages/users/Users';
 import Layout from 'src/pages/layout/Layout';
 import Error from 'src/pages/error/Error';
-// import Login from './pages/login/Login';
+import Login from './pages/login/Login';
 // nay t chua lam, set lai cai routes cho t voi
 const routes = [
     {
         path:'/',
         exec: true,
-        element:<Layout/>,
-        children:[
+        component:<Layout/>,
+        routes:[
             {
-                path: 'categories',
+                path: '/categories',
                 exact: true,
                 component: Categories,
                 // element:<Categories/>
             },
             {
-                path: 'sourses',
+                path: '/sourses',
                 exact: true,
                 component: Sourses,
                 // element:<Sourses/>
             },
             {
-                path: 'users',
+                path: '/users',
                 exact: true,
                 component: Users,
                 // element:<Users/>
@@ -37,7 +37,17 @@ const routes = [
                 // element:<Error/>
             },
         ]
-        }//cai error dau 
+    },
+    {
+        path:'/login',
+        exact:true,
+        component: Login,
+    },
+    {
+        path: '*',
+        exact: true,
+        component: Error,
+    }, 
 
 ]
 export default routes;

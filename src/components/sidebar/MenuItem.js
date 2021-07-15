@@ -1,16 +1,21 @@
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemText } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
-
+const useStyles = makeStyles(() =>({
+    cName:{
+        textAlign: 'center',
+    }
+}))
 const MenuItem = (props) => {
-    const { path, icon, name,className }= props;
+    const { path,name }= props;
+    const classes= useStyles();
     return (
             <ListItem 
-                className={className}
                 button
                 to={path}
                 {...props}
+                className={classes.cName}
             >
-                <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText>{name}</ListItemText>
             </ListItem>
     )

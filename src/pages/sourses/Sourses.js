@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
 });
-function Courses() {
+function Sourses() {
   const classes = useStyles();
 
   return (
@@ -77,4 +77,4 @@ function Courses() {
   
   );
 }
-export default withRouter(Courses)
+export default withRouter(Sourses)

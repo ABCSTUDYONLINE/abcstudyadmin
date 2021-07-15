@@ -10,7 +10,6 @@ import Layout from './components/layout/Layout';
 import Login from './pages/login/Login';
 import Error from './pages/error/Error';
 
-
 function App() {
   return (
     <Router>
@@ -19,6 +18,8 @@ function App() {
           return localStorage.getItem("accessToken") ? <Layout /> : <Redirect to="/login" />
         }}>
         </Route>
+        <Route exact path="/sourses" component={Layout}/>
+        <Route exact path="/users" component={Layout}/>
         <Route exact path="/login" component={Login} />
         <Route path="*" component={Error} />
 
