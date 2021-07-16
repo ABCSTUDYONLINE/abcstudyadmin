@@ -6,7 +6,7 @@ import useStyles from './styles'
 import MenuItem from './MenuItem';
 import { NavLink } from "react-router-dom";
 
-
+import Logo from "../../logo.svg"
 function Sidebar() {
     const classes = useStyles();
     
@@ -20,12 +20,14 @@ function Sidebar() {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+          <img src={Logo} alt="ABClogo" className={classes.imgToolbar}/>
+        </div>
         <Divider/>
         <List className={classes.listItem}>
           {listMenu.map(item => (
             <NavLink to={item.path} exact={item.excat} className={classes.menuLink} key={item.path}>
-                <MenuItem name={item.name}/>
+                <MenuItem name={item.name} divider/>
             </NavLink>
             
           ))}

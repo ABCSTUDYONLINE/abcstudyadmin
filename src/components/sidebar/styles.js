@@ -8,19 +8,29 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: '#262621',
-    zindex:80,
+    backgroundColor: '#fff',
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    height: theme.spacing(8),
+    
+  },
+  imgToolbar:{
+    marginTop: theme.spacing(1),
+    height: '70%',
+    marginLeft: theme.spacing(12),
+  },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
   menuLink:{
     textDecoration:'none',
-    color: theme.palette.background.default,
+    color: theme.palette.primary.light,
   },
+  listItem:{
+    paddingTop:theme.spacing(0),
+  }
 }))
 
 export default useStyles
