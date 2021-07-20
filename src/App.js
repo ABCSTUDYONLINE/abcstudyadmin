@@ -5,7 +5,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-//components
+//components app 
 import Layout from './components/layout/Layout';
 import Login from './pages/login/Login';
 import Error from './pages/error/Error';
