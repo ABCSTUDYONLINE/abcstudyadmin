@@ -21,7 +21,7 @@ function* postCategories() {
       if (message === 'Success!') {
         Modal.success({
           title: 'Success',
-          content: 'you have added new category successfully',
+          content: 'You have added new category successfully',
         });
         yield put({ type: categoryType.POST_CATEGORIES_SUCCESS, payload: {} });
       } else {
@@ -40,10 +40,10 @@ function* putCategories() {
       const res = yield call(httpCategory.putCategories, payload);
       const { data, message } = res;
       console.log(res)
-      if (message === 'Delete success!') {
+      if (message === 'This category has updated success!') {
         Modal.success({
           title: 'Success',
-          content: 'you have updated category successfully',
+          content: 'You have updated category successfully',
         });
         yield put({ type: categoryType.PUT_CATEGORIES_SUCCESS, payload: {} });
       } else {
@@ -82,7 +82,7 @@ function* deleteCategories() {
       if (message === 'Delete success!') {
         Modal.success({
           title: 'Success',
-          content: 'you have deleted category successfully',
+          content: 'You have deleted category successfully',
         });
         yield put({ type: categoryType.DELETE_CATEGORIES_SUCCESS, payload: {} });
       } else {
