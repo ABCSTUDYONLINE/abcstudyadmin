@@ -1,5 +1,5 @@
 import Categories from '../../pages/categories/Categories'
-import Sourses from '../../pages/sourses/Sourses'
+import Courses from '../../pages/courses/Courses'
 import Users from '../../pages/users/Users'
 
 import {
@@ -11,20 +11,20 @@ import {
 const listMenu = [
   {
     name: "Categories",
-    path: "/",
+    path: "/dashboard/categories",
     exact: true,
     icon: <CategoryIcon />,
     component: Categories,
   },
   {
-    name: "Sourses",
-    path: "/sourses",
+    name: "Courses",
+    path: "/dashboard/courses",
     icon: <LibraryBooksIcon />,
-    component: Sourses,
+    component: Courses,
   },
   {
     name: "Users",
-    path: "/users",
+    path: "/dashboard/users",
     icon: <GroupIcon />,
     component: Users,
   }

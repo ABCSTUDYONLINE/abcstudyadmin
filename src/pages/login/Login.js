@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button, CircularProgress, Fade, Grid, TextField, Typography } from '@material-ui/core'
+import { useDispatch } from 'react-redux';
+
+import { signIn } from '../../redux/user/userAction';
 
 //styles 
 import useStyles from './styles';
@@ -10,28 +13,41 @@ import logo from './logo.svg';
 
 
 export default function Login() {
+
+    const dispatch = useDispatch();
+
+    const history = useHistory();
+
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    const [email, setEmail] = useState("admin@example.com")
-    const [password, setPassword] = useState("admin123")
-    const history = useHistory();
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const login = () => {
         setIsLoading(true);
         setError(false);
-        if (email === "admin@example.com" && password === "admin123") {
-            setTimeout(() => {
-                localStorage.setItem("accessToken", true)
-                history.replace("/")
-                setError(null)
-                setIsLoading(false)
-            }, 1000);
+        if (email != "" && password != "") {
+            dispatch(signIn({
+                payload: {
+                    'username': email,
+                    'password': password
+                }, history, dispatch
+            }))
         } else {
             /* alert("Wrong email or password!") */
             setError(true);
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        let token = localStorage.getItem('token')
+        if (token) {
+            history.push('/dashboard/categories')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <Grid container className={classes.container}>
             <div className={classes.logotypeContainer}>

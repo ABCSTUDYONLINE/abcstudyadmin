@@ -1,32 +1,47 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import routes from './routes';
+// import './styles/style.scss';
+import { connect } from 'react-redux';
+// import Spinner from 'components/Spinner';
+import { showLoading } from './redux/layout/layoutSelector'
 
-//components app 
-import Layout from './components/layout/Layout';
-import Login from './pages/login/Login';
-import Error from './pages/error/Error';
-
-function App() {
+function RouteWithSubRoutes(route) {
   return (
-    <Router>
-        <Switch>
-        <Route exact path="/" render={() => {
-          return localStorage.getItem("accessToken") ? <Layout /> : <Redirect to="/login" />
-        }}>
-        </Route>
-        <Route exact path="/sourses" component={Layout}/>
-        <Route exact path="/users" component={Layout}/>
-        <Route exact path="/login" component={Login} />
-        <Route path="*" component={Error} />
-
-      </Switch>
-    </Router>
-     
-      
+    <Route
+      path={route.path}
+      exact={route.exact}
+      render={props => {
+        const { location: { pathname } = {} } = props
+        return pathname === '/' ? <Redirect to="/dashboard"/> : <route.component {...props} routes={route.routes} />
+      }}
+    />
   );
 }
-export default App;
+
+class App extends Component {
+  // eslint-disable-next-line no-useless-constructor
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <>
+        {/* <Spinner active={this.props.isLoading}/> */}
+        <Switch>
+          {routes.map((item, index) => (<RouteWithSubRoutes key={index} {...item}/>))}
+        </Switch>
+      </>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    isLoading: showLoading(state)
+  }
+}
+
+export default connect(mapStateToProps)(App);
+// export default App;

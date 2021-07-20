@@ -1,56 +1,67 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import { 
-    Paper,
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableContainer, 
-    TableHead, 
-    TableRow,
-} from '@material-ui/core';
+import { Table } from 'antd';
+import 'antd/dist/antd.css';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories, deleteCategories, putCategories } from '../../../redux/category/categoryAction';
 
-const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-  });
-function createData(fieldname, numOfCounts, actions) {
-    return { fieldname, numOfCounts, actions };
+
+export default function TableCate(props) {
+
+  const dataCategory = useSelector(state => state.category.categories);
+  const totalCategory = useSelector(state => state.category.total);
+  const dispatch = useDispatch();
+
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(5)
+
+  const getDataCategory = () => {
+    dispatch(getCategories(page, limit))
   }
-  
-  const rows = [
-    createData('Lập trình javascript cơ bản', 25),
-    createData('Lập trình Java nâng cao', 17),
-    createData('Lập trình frontend từ cơ bản tới nâng cao', 101),
-    createData('Lập trình react redux', 98),
-    createData('Lập trình react native', 49),
+  useEffect(() => {
+    getDataCategory()
+  }, [page, limit])
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    setPage(pagination.current)
+  }
+
+  const onDelete = (idCategory) => {
+    console.log(idCategory)
+  }
+
+  const onEdit = (idCategory) => {
+    console.log(idCategory)
+  }
+
+  const columns = [
+    {
+      title: 'Level category',
+      dataIndex: 'levelCategory',
+      key: 'levelCategory',
+      sorter: true,
+    },
+    {
+      title: 'Category Name',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
+      sorter: true,
+    },
+    {
+      title: 'Action',
+      dataIndex: 'id',
+      render: (id) =>
+        <div>
+          <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
+          <a style={{ cursor: 'pointer' }} onClick={() => onEdit(id)}>edit</a>
+        </div>
+    },
   ];
-  
-export default function TableCate() {
-    const classes = useStyles();
-    return (
-        <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Fields Name</TableCell>
-              <TableCell align="center">Number Of Counts</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.fieldname}
-                </TableCell>
-                <TableCell align="center">{row.numOfCounts}</TableCell>
-                <TableCell align="center">{row.actions}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-    </TableContainer>
-    )
+
+  return (
+    <Table columns={columns} dataSource={dataCategory} onChange={onChange} pagination={{
+      current: page,
+      pageSize: 5,
+      total: totalCategory
+    }} />
+  )
 }

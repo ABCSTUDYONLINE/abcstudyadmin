@@ -1,79 +1,84 @@
-import React from 'react'
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Typography,
-    Divider,
-    IconButton,
-    TextField
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import {makeStyles} from "@material-ui/core/styles"
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: 200,
-      },
-    },
-  }));
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Select, Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { postCategories, getCategories } from '../../../redux/category/categoryAction';
+
 export default function PopupCate() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
   
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-    return (
-        <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        <IconButton size="small" flexed>
-          <AddIcon />
-          <Typography>Add new</Typography>
-        </IconButton>
+  const dispatch = useDispatch();
+
+  const [visible, setVisible] = React.useState(false);
+
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
+    setVisible(false);
+  };
+
+  const onFinish = (values) => {
+    dispatch(postCategories(values))
+    setVisible(false);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    setVisible(true);
+  };
+  return (
+
+    <div>
+      <Button type="primary" onClick={showModal}>
+        New category
       </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+      <Modal
+        title="New category"
+        visible={visible}
+        onCancel={handleCancel}
+        okButtonProps={{
+          style: {
+            display: "none",
+          },
+        }}
+        cancelButtonProps={{
+          style: {
+            display: "none",
+          },
+        }}
       >
-        <DialogTitle id="alert-dialog-title">{"New Field"}</DialogTitle>
-        <Divider />
-        <DialogContent>
-          <form className={classes.root}>
-            <TextField
-              id="outlined-basic"
-              label="Field Name"
-              variant="outlined"
-              type="text"
-              fullWidth
-            />
-            <TextField
-              id="outlined-basic"
-              label="Num Of Counts"
-              variant="outlined"
-              type="number"
-              fullWidth
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus type="submit">
-            Submit
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            label="Level category"
+            name="levelCategory"
+            rules={[{ required: true, message: 'Please input level category!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Category name"
+            name="categoryName"
+            rules={[{ required: true, message: 'Please input category name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              New
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
-    )
+  )
 }
