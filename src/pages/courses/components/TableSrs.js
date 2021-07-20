@@ -1,76 +1,145 @@
-import React from 'react'
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+import React, { useState, useEffect } from 'react';
+import { Table, Form, Input, Button, Select, Modal } from 'antd';
+import 'antd/dist/antd.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCourses, deleteCourses, putCourses } from '../../../redux/courses/coursesAction';
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
+
+export default function TableSrc(props) {
+
+  const dataCategory = useSelector(state => state.courses.courses);
+  const totalCategory = useSelector(state => state.courses.total);
+  const dispatch = useDispatch();
+
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(5)
+
+  const [coursesIdUpdate, setCategoryIdUpdate] = useState()
+
+  const getDataCategory = () => {
+    dispatch(getCourses(0, page, limit))
+  }
+  useEffect(() => {
+    getDataCategory()
+  }, [page, limit])
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    setPage(pagination.current)
+  }
+
+  const onDelete = (idCategory) => {
+    dispatch(deleteCourses(idCategory))
+  }
+
+  const onEdit = (idCategory) => {
+    setCategoryIdUpdate(idCategory)
+    setVisible(true);
+  }
+
+  const columns = [
+    {
+      title: 'Level courses',
+      dataIndex: 'courseName',
+      key: 'courseName',
+      sorter: true,
     },
-  },
-}))(TableRow);
+    {
+      title: 'Category Name',
+      dataIndex: 'fee',
+      key: 'fee',
+      sorter: true,
+    },
+    {
+      title: 'Category Name',
+      dataIndex: 'studies',
+      key: 'studies',
+      sorter: true,
+    },
+    {
+      title: 'Action',
+      dataIndex: 'id',
+      render: (id) =>
+        <div>
+          <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
+          <a style={{ cursor: 'pointer' }} onClick={() => onEdit(id)}>edit</a>
+        </div>
+    },
+  ];
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+  const [visible, setVisible] = useState(false);
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
-export default function TableSrs() {
-    const classes = useStyles();
-    return (
-        <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    )
+  const onFinish = (values) => {
+    dispatch(putCourses(
+      {
+        'coursesId': coursesIdUpdate,
+        'coursesName': values.coursesName,
+        'levelCategory': values.levelCategory
+      }))
+    setVisible(false);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    setVisible(true);
+  };
+
+  return (
+    <div>
+      <Table columns={columns} dataSource={dataCategory} onChange={onChange} pagination={{
+        current: page,
+        pageSize: 5,
+        total: totalCategory
+      }} />
+      <Modal
+        title="Update courses"
+        visible={visible}
+        onCancel={handleCancel}
+        okButtonProps={{
+          style: {
+            display: "none",
+          },
+        }}
+        cancelButtonProps={{
+          style: {
+            display: "none",
+          },
+        }}
+      >
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            label="Level courses"
+            name="levelCategory"
+            rules={[{ required: true, message: 'Please input level courses!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Category name"
+            name="coursesName"
+            rules={[{ required: true, message: 'Please input courses name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
+  )
 }
