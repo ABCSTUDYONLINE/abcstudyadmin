@@ -16,10 +16,8 @@ export default function* userSaga() {
 function* postCategories() {
   yield takeEvery(categoryType.POST_CATEGORIES, function* ({ payload }) {
     try {
-      console.log("payload", payload)
       const res = yield call(httpCategory.postCategories, payload);
       const { data, message } = res;
-      console.log(res)
       if (message === 'Success!') {
         Modal.success({
           title: 'Success',
@@ -39,7 +37,21 @@ function* postCategories() {
 function* putCategories() {
   yield takeEvery(categoryType.PUT_CATEGORIES, function* ({ payload }) {
     try {
-      
+      const res = yield call(httpCategory.putCategories, payload);
+      const { data, message } = res;
+      console.log(res)
+      if (message === 'Delete success!') {
+        Modal.success({
+          title: 'Success',
+          content: 'you have updated category successfully',
+        });
+        yield put({ type: categoryType.PUT_CATEGORIES_SUCCESS, payload: {} });
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
     } catch (e) { console.log(e) }
   });
 }
@@ -64,7 +76,21 @@ function* getCategories() {
 function* deleteCategories() {
   yield takeEvery(categoryType.DELETE_CATEGORIES, function* ({ categoryID }) {
     try {
-
+      const res = yield call(httpCategory.deleteCategories, categoryID);
+      const { data, message } = res;
+      console.log(res)
+      if (message === 'Delete success!') {
+        Modal.success({
+          title: 'Success',
+          content: 'you have deleted category successfully',
+        });
+        yield put({ type: categoryType.DELETE_CATEGORIES_SUCCESS, payload: {} });
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
     } catch (e) { console.log(e) }
   });
 }
