@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Table, Form, Input, Button, Select, Modal } from 'antd';
+import { Table } from 'antd';
 import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCourses, deleteCourses, putCourses } from '../../../redux/courses/coursesAction';
@@ -14,8 +14,6 @@ export default function TableSrc(props) {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(5)
-
-  const [coursesIdUpdate, setCategoryIdUpdate] = useState()
 
   const getDataCategory = () => {
     dispatch(getCourses(0, page, limit))

@@ -4,7 +4,9 @@ import userType from './userType';
 const initialState = {
   loading: 0,
   token: '',
-  userId: ''
+  userId: '',
+  users: [],
+  total: 0
 };
 
 export default function userReducer(state = initialState, action) {
@@ -14,8 +16,6 @@ export default function userReducer(state = initialState, action) {
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
       const { accessToken } = payload
-      console.log("accessToken",accessToken)
-      console.log("payload",payload)
       // localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
       // localStorage.setItem('fullName', fullName);
@@ -26,6 +26,10 @@ export default function userReducer(state = initialState, action) {
       // localStorage.removeItem("userId");
       localStorage.removeItem("token");
       // localStorage.removeItem("fullName");
+      break;
+
+    case userType.GET_AUTT_USERS_SUCCESS:
+      newState = Object.assign({}, state, { users: payload.data, total: payload.total });
       break;
 
     case userType.LOADING_SHOW:

@@ -24,3 +24,11 @@ export function signOut(history) {
     history: history,
   };
 }
+export function getAuthUsers(page, limit, role) {
+  return {
+    type: userType.SIGN_OUT,
+    page: page,
+    limit: limit,
+    role: role,
+  };
+}

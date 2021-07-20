@@ -7,7 +7,8 @@ export default function* userSaga() {
   yield all([
     signIn(),
     signOut(),
-    register()
+    register(),
+    getAuthUsers()
   ]);
 }
 
@@ -17,8 +18,8 @@ function* signIn() {
       const res = yield call(httpUser.login, payload); // api call
       const { status } = res;
       // if (status === 'ok') {
-        yield put({ type: userType.SIGN_IN_SUCCESS, payload: res });
-        history.push('/dashboard/categories');
+      yield put({ type: userType.SIGN_IN_SUCCESS, payload: res });
+      history.push('/dashboard/categories');
       // } else {
       //   const { message } = res.data;
       //   Modal.error({
@@ -60,6 +61,23 @@ function* signOut() {
     try {
       history.push('/login');
       yield put({ type: userType.SIGN_OUT_SUCCESS, payload: null });
+    } catch (e) { console.log(e) }
+  });
+}
+
+function* getAuthUsers() {
+  yield takeEvery(userType.GET_AUTT_USERS, function* ({ page, limit, role }) {
+    try {
+      const res = yield call(httpUser.getAuthUsers, { page, limit, role });
+      const { data, message } = res;
+      if (message === 'Success!') {
+        yield put({ type: userType.GET_AUTT_USERS_SUCCESS, payload: { data: res.data.list, total: res.data.total } });
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
     } catch (e) { console.log(e) }
   });
 }
