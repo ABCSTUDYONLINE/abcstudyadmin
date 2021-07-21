@@ -6,7 +6,7 @@ function Courses() {
 
   return (
     <div>
-      <PageHeader title="Table Courses"/>
+      <PageHeader title="Courses management"/>
       <TableSrs/>
     </div>
   );

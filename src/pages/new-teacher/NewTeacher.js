@@ -31,7 +31,7 @@ export default function NewTeacher() {
     return (
         <div style={{ backgroundColor: '#FFF', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 600, flexDirection: 'column' }}>
             <div style={{ height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontSize: 32 }}>New teacher</Text>
+                <Text style={{ fontSize: 32, fontWeight: 500 }}>New teacher</Text>
             </div>
             <div style={{ height: 400 }}>
                 <Form

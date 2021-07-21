@@ -10,7 +10,7 @@ import { getCategories } from '../../redux/category/categoryAction';
 
 const useStyles = makeStyles(theme => ({
   pageContent: {
-    margin: theme.spacing(5),
+    // margin: theme.spacing(5),
     padding: theme.spacing(3)
   }
 }))
@@ -20,7 +20,7 @@ function Categories() {
 
   return (
     <div>
-      <PageHeader title="Table Category" />
+      <PageHeader title="Category management" />
       <Paper className={classes.pageContent}>
         <PopupCate />
         <TableCate/>

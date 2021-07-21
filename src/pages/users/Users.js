@@ -6,7 +6,7 @@ function Users() {
   
   return (
     <div>
-        <PageHeader title="Table Users"/>
+        <PageHeader title="Users management"/>
         <TableUsers/>
     </div>
   );
