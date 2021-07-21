@@ -18,16 +18,6 @@ const useStyles = makeStyles(theme => ({
 function Categories() {
   const classes = useStyles();
 
-  // const dataCategory = useSelector(state => state.category.categories);
-
-  // const dispatch = useDispatch();
-  // const getDataCategory = () => {
-  //   dispatch(getCategories(1, 1))
-  // }
-  // useEffect(() => {
-  //   getDataCategory()
-  // }, [])
-
   return (
     <div>
       <PageHeader title="Table Category" />

@@ -135,7 +135,7 @@ export default function TableCate(props) {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ borderRadius: 6 }}>
               Update
             </Button>
           </Form.Item>

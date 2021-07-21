@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postCategories, getCategories } from '../../../redux/category/categoryAction';
 
 export default function PopupCate() {
-  
+
   const dispatch = useDispatch();
 
   const [visible, setVisible] = React.useState(false);
@@ -30,9 +30,11 @@ export default function PopupCate() {
   return (
 
     <div>
-      <Button type="primary" onClick={showModal}>
-        New category
-      </Button>
+      <div style={{ display: 'flex', float: 'right', marginBottom: 10 }}>
+        <Button type="primary" onClick={showModal} style={{ borderRadius: 6 }}>
+          New category
+        </Button>
+      </div>
       <Modal
         title="New category"
         visible={visible}
@@ -73,7 +75,7 @@ export default function PopupCate() {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ borderRadius: 6 }}>
               New
             </Button>
           </Form.Item>
