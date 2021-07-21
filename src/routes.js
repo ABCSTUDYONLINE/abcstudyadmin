@@ -6,6 +6,7 @@ import Login from './pages/login/Login';
 import Categories from './pages/categories/Categories';
 import Users from './pages/users/Users'; 
 import Courses from './pages/courses/Courses'; 
+import NewTeacher from './pages/new-teacher/NewTeacher'; 
 const routes = [
   {
     path: '/login',
@@ -38,6 +39,12 @@ const routes = [
         exact: true,
         auth: true,
         component: Categories
+      },
+      {
+        path: '/dashboard/new-teacher',
+        exact: true,
+        auth: true,
+        component: NewTeacher
       },
     ]
   },

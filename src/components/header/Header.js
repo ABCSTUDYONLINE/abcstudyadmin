@@ -2,16 +2,20 @@ import React from 'react';
 import { AppBar, Grid, IconButton, Toolbar } from '@material-ui/core';
 import {withRouter,useHistory} from 'react-router';
 import {PowerSettingsNew as PowerSettingsNewIcon,
-    
 } from '@material-ui/icons'
+import { useDispatch } from 'react-redux';
+import { signOut } from '../../redux/user/userAction';
+
 import useStyles from './styles'
 function Header() {
+
     const classes = useStyles();
     const history = useHistory();
+
+    const dispatch = useDispatch();
   
     const logout = () => {
-        localStorage.removeItem("accessToken")
-        history.replace("/login")
+      dispatch(signOut(history))
     }
 
     return (

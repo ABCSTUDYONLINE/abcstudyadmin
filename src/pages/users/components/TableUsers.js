@@ -58,7 +58,7 @@ export default function TableUsers(props) {
       sorter: true,
     },
     {
-      title: 'Date',
+      title: 'Date create',
       dataIndex: 'createdAt',
       key: 'createdAt',
       sorter: true,

@@ -27,6 +27,12 @@ const listMenu = [
     path: "/dashboard/users",
     icon: <GroupIcon />,
     component: Users,
+  },
+  {
+    name: "New teacher",
+    path: "/dashboard/new-teacher",
+    icon: <GroupIcon />,
+    component: Users,
   }
 ];
 export default listMenu
