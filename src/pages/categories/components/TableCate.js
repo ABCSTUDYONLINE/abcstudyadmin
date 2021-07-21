@@ -7,6 +7,7 @@ import { getCategories, deleteCategories, putCategories } from '../../../redux/c
 
 
 export default function TableCate(props) {
+  const [form] = Form.useForm();
 
   const dataCategory = useSelector(state => state.category.categories);
   const totalCategory = useSelector(state => state.category.total);
@@ -18,23 +19,28 @@ export default function TableCate(props) {
   const [categoryIdUpdate, setCategoryIdUpdate] = useState()
 
   const getDataCategory = () => {
-    dispatch(getCategories(page, limit))
+    dispatch(getCategories(page, limit));
   }
   useEffect(() => {
-    getDataCategory()
+    getDataCategory();
   }, [page, limit])
 
   const onChange = (pagination, filters, sorter, extra) => {
-    setPage(pagination.current)
+    setPage(pagination.current);
   }
 
   const onDelete = (idCategory) => {
-    dispatch(deleteCategories(idCategory))
+    dispatch(deleteCategories(idCategory));
   }
 
-  const onEdit = (idCategory) => {
-    setCategoryIdUpdate(idCategory)
+  const onEdit = (idCategory, category) => {
+    setCategoryIdUpdate(idCategory);
+    form.setFieldsValue({
+      categoryName: category.categoryName,
+      levelCategory: category.levelCategory
+    });
     setVisible(true);
+    console.log(form)
   }
 
   const columns = [
@@ -53,10 +59,10 @@ export default function TableCate(props) {
     {
       title: 'Action',
       dataIndex: 'id',
-      render: (id) =>
+      render: (id, category) =>
         <div>
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
-          <a style={{ cursor: 'pointer' }} onClick={() => onEdit(id)}>edit</a>
+          <a style={{ cursor: 'pointer' }} onClick={() => onEdit(id, category)}>edit</a>
         </div>
     },
   ];
@@ -104,7 +110,8 @@ export default function TableCate(props) {
         }}
       >
         <Form
-          name="basic"
+          form={form}
+          name="control-hooks"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
