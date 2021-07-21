@@ -30,7 +30,7 @@ function Categories() {
 
   return (
     <div>
-      <PageHeader title="Table Fields" />
+      <PageHeader title="Table Category" />
       <Paper className={classes.pageContent}>
         <PopupCate />
         <TableCate/>

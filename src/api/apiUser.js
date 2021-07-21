@@ -10,7 +10,7 @@ const register = (params) => {
 
 const getAuthUsers = (params)=>{
   const { role, page, limit } = params;
-  return API.post(`https://abcstudyonline.herokuapp.com/auth/users?page=${page}&limit=${limit}&role=${role}`).then(res => res.data);
+  return API.get(`https://abcstudyonline.herokuapp.com/auth/users?page=${page}&limit=${limit}&role=${role}`).then(res => res.data);
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

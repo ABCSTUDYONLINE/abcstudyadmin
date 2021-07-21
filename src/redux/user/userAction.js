@@ -26,7 +26,7 @@ export function signOut(history) {
 }
 export function getAuthUsers(page, limit, role) {
   return {
-    type: userType.SIGN_OUT,
+    type: userType.GET_AUTT_USERS,
     page: page,
     limit: limit,
     role: role,
