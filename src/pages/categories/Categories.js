@@ -25,7 +25,6 @@ function Categories() {
         <PopupCate />
         <TableCate/>
       </Paper>
-
     </div>
   )
 }

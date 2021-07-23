@@ -9,12 +9,10 @@ export function signIn({ payload, history, dispatch }) {
   };
 }
 
-export function register({ payload, history, dispatch }) {
+export function register(payload) {
   return {
     type: userType.REGISTER,
-    payload,
-    history,
-    dispatch
+    payload
   };
 }
 

@@ -57,6 +57,12 @@ export default function TableCate(props) {
       sorter: true,
     },
     {
+      title: 'Number course',
+      dataIndex: 'courses',
+      key: 'courses',
+      sorter: true,
+    },
+    {
       title: 'Action',
       dataIndex: 'id',
       render: (id, category) =>

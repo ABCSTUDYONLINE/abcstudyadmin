@@ -32,17 +32,19 @@ function* signIn() {
 }
 
 function* register() {
-  yield takeEvery(userType.REGISTER, function* ({ payload, history }) {
+  yield takeEvery(userType.REGISTER, function* ({ payload }) {
     try {
-      const res = yield call(httpUser.register, payload); // api call
-      const { status, data: { email } = {} } = res;
-      if (status === 'ok') {
+      const res = yield call(httpUser.register, payload); // api cal
+      const { message } = res;
+      if (!message) {
+        yield put({ type: userType.REGISTER_SUCCESS, payload: res });
+
+        const { email } = payload;
+        yield call(httpUser.postAuthOtpSend, {email: email});
+
         Modal.info({
           title: 'Successfull',
-          content: `Register successful! Please check email ${email} to login .`,
-          onOk() {
-            history.push('/login');
-          }
+          content: `Register successful! Please check email to login .`,
         })
       } else {
         const { message } = res.data;

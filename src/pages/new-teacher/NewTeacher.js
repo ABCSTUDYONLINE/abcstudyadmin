@@ -19,9 +19,20 @@ export default function NewTeacher() {
                 'phoneNumber': values.phoneNumber,
                 'address': values.address,
                 'role': 'teacher',
-                'chuaco': moment(values.chuaco._d).format('DD/MM/YYYY')
+                'birthDay': moment(values.birthDay._d).format('YYYY/MM/DD')
             }
         ));
+        // form.setFieldsValue({
+        //     firstName: '',
+        //     lastName: '',
+        //     username: '',
+        //     password: '',
+        //     email: '',
+        //     phoneNumber: '',
+        //     address: '',
+        //     role: '',
+        //     birthDay: ''
+        // });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -107,7 +118,7 @@ export default function NewTeacher() {
                         <div style={{ width: 400 }}>
                             <Form.Item
                                 label='Date of birth'
-                                name='chuaco'
+                                name='birthDay'
                                 rules={[{ required: true, message: 'Please input date of birth!' }]}
                             >
                                 <DatePicker format={'DD/MM/YYYY'} />

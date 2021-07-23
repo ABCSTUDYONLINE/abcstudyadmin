@@ -16,16 +16,17 @@ export default function userReducer(state = initialState, action) {
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
       const { accessToken } = payload
-      // localStorage.setItem('userId', userId);
       localStorage.setItem('token', accessToken);
-      // localStorage.setItem('fullName', fullName);
-
       newState = Object.assign({}, state, { token: accessToken });
       break;
+
+    case userType.REGISTER_SUCCESS:
+      const { } = payload
+      newState = Object.assign({}, state, {});
+      break;
+
     case userType.SIGN_OUT_SUCCESS:
-      // localStorage.removeItem("userId");
       localStorage.removeItem("token");
-      // localStorage.removeItem("fullName");
       break;
 
     case userType.GET_AUTT_USERS_SUCCESS:
@@ -35,6 +36,7 @@ export default function userReducer(state = initialState, action) {
     case userType.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: state.loading++ });
       break;
+      
     case userType.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: state.loading-- });
       break;
