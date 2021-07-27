@@ -21,20 +21,20 @@ export default function Login() {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const login = () => {
         setIsLoading(true);
         setError(false);
-        if (email != "" && password != "") {
+        if (username != "" && password != "") {
             dispatch(signIn({
                 payload: {
-                    'username': email,
+                    'username': username,
                     'password': password
                 }, history, dispatch
             }))
         } else {
-            /* alert("Wrong email or password!") */
+            /* alert("Wrong username or password!") */
             setError(true);
             setIsLoading(false);
         }
@@ -64,7 +64,7 @@ export default function Login() {
                             </Typography>
                         </Fade>
                         <TextField
-                            id="email"
+                            id="username"
                             InputProps={{
                                 classes: {
                                     underline: classes.textFieldUnderLine,
@@ -72,11 +72,10 @@ export default function Login() {
                                 }
                             }}
 
-                            value={email}
+                            value={username}
                             margin="normal"
-                            onChange={e => setEmail(e.target.value)}
-                            placeholder="Email Address"
-                            type="email"
+                            onChange={e => setUsername(e.target.value)}
+                            placeholder="Username"
                             fullWidth
                         />
                         <TextField
@@ -98,7 +97,7 @@ export default function Login() {
                             {isLoading ? (<CircularProgress size={26} className={classes.loginLoader} />
                             ) : (
                                 <Button
-                                    disabled={email.length === 0 || password.length === 0}
+                                    disabled={username.length === 0 || password.length === 0}
                                     variant="contained"
                                     color="primary"
                                     size="large"

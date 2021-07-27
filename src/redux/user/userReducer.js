@@ -6,13 +6,14 @@ const initialState = {
   token: '',
   userId: '',
   users: [],
-  total: 0
+  total: 0,
+  isChanged: 1
 };
 
 export default function userReducer(state = initialState, action) {
   let newState;
   const { type, payload = {} } = action;
-
+  const changed = new Date().getTime()
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
       const { accessToken } = payload
@@ -33,10 +34,14 @@ export default function userReducer(state = initialState, action) {
       newState = Object.assign({}, state, { users: payload.data, total: payload.total });
       break;
 
+    case userType.DELETE_AUTH_USERS_SUCCESS:
+      newState = Object.assign({}, state, { isChanged: changed });
+      break;
+
     case userType.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: state.loading++ });
       break;
-      
+
     case userType.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: state.loading-- });
       break;

@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Table, Radio } from 'antd';
 import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthUsers } from '../../../redux/user/userAction';
+import { getAuthUsers, deleteAuthUser } from '../../../redux/user/userAction';
 import * as moment from 'moment';
 
 export default function TableUsers(props) {
 
   const dataCategory = useSelector(state => state.user.users);
   const totalCategory = useSelector(state => state.user.total);
+  const isChanged = useSelector(state => state.user.isChanged);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1)
@@ -21,14 +22,16 @@ export default function TableUsers(props) {
   }
   useEffect(() => {
     getDataAuthUsers()
-  }, [page, limit, role])
+  }, [page, limit, role, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
   }
 
-  const onDelete = (coursesID) => {
-    // dispatch(deleteCourses(coursesID))
+  const onDelete = (userID) => {
+    dispatch(deleteAuthUser({
+      userId: userID
+    }))
   }
 
   const columns = [

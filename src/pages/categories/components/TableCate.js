@@ -11,6 +11,7 @@ export default function TableCate(props) {
 
   const dataCategory = useSelector(state => state.category.categories);
   const totalCategory = useSelector(state => state.category.total);
+  const isChanged = useSelector(state => state.category.isChanged);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1)
@@ -23,7 +24,7 @@ export default function TableCate(props) {
   }
   useEffect(() => {
     getDataCategory();
-  }, [page, limit])
+  }, [page, limit, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current);
@@ -40,7 +41,6 @@ export default function TableCate(props) {
       levelCategory: category.levelCategory
     });
     setVisible(true);
-    console.log(form)
   }
 
   const columns = [

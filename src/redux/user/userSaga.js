@@ -8,7 +8,8 @@ export default function* userSaga() {
     signIn(),
     signOut(),
     register(),
-    getAuthUsers()
+    getAuthUsers(),
+    deleteAuthUser(),
   ]);
 }
 
@@ -39,8 +40,8 @@ function* register() {
       if (!message) {
         yield put({ type: userType.REGISTER_SUCCESS, payload: res });
 
-        const { email } = payload;
-        yield call(httpUser.postAuthOtpSend, {email: email});
+        // const { email } = payload;
+        // yield call(httpUser.postAuthOtpSend, {email: email});
 
         Modal.info({
           title: 'Successfull',
@@ -75,6 +76,29 @@ function* getAuthUsers() {
       if (message === 'Success!') {
         yield put({ type: userType.GET_AUTT_USERS_SUCCESS, payload: { data: res.data.list, total: res.data.total } });
       } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
+    } catch (e) { console.log(e) }
+  });
+}
+
+function* deleteAuthUser() {
+  yield takeEvery(userType.DELETE_AUTH_USERS, function* ({ payload }) {
+    try {
+      const res = yield call(httpUser.deleteAuthUser, payload); // api cal
+      const { message } = res;
+      if (!message) {
+        yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res });
+
+        Modal.info({
+          title: 'Successfull',
+          content: `Delete user successfull ! .`,
+        })
+      } else {
+        const { message } = res.data;
         Modal.error({
           title: 'Error',
           content: `${message}!`,

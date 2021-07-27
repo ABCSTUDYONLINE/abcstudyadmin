@@ -18,10 +18,15 @@ const postAuthOtpSend = (params) => {
   return API.post("/auth/otp/send", params).then(res => res.data);
 };
 
+const deleteAuthUser = (params) => {
+  return API.delete("/auth/users", params).then(res => res.data);
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,
   register,
   getAuthUsers,
-  postAuthOtpSend
+  postAuthOtpSend,
+  deleteAuthUser
 }

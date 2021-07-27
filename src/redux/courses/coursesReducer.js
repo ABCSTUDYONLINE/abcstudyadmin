@@ -4,20 +4,24 @@ import coursesType from './coursesType';
 const initialState = {
   loading: 0,
   courses: [],
-  total: 0
+  total: 0,
+  isChanged: 1
 };
 
 export default function coursesReducer(state = initialState, action) {
   let newState;
   const { type, payload = {} } = action;
-
+  const changed = new Date().getTime()
+  
   switch (type) {
     case coursesType.POST_COURSES_SUCCESS:
-      // const { } = payload
+      const { } = payload
+      newState = Object.assign({}, state, { isChanged: changed });
       break;
 
     case coursesType.PUT_COURSES_SUCCESS:
       const { } = payload
+      newState = Object.assign({}, state, { isChanged: changed });
       break;
 
     case coursesType.GET_COURSES_SUCCESS:
@@ -27,6 +31,7 @@ export default function coursesReducer(state = initialState, action) {
 
     case coursesType.DELETE_COURSES_SUCCESS:
       const { } = payload
+      newState = Object.assign({}, state, { isChanged: changed });
       break;
 
     default:

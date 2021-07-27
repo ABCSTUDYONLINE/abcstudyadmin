@@ -10,6 +10,7 @@ export default function TableSrc(props) {
 
   const dataCategory = useSelector(state => state.courses.courses);
   const totalCategory = useSelector(state => state.courses.total);
+  const isChanged = useSelector(state => state.courses.isChanged);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1)
@@ -20,7 +21,7 @@ export default function TableSrc(props) {
   }
   useEffect(() => {
     getDataCategory()
-  }, [page, limit])
+  }, [page, limit, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
