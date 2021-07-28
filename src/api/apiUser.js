@@ -9,7 +9,7 @@ const register = (params) => {
   return API.post("/auth/register", params).then(res => res.data);
 };
 
-const getAuthUsers = (params)=>{
+const getAuthUsers = (params) => {
   const { role, page, limit } = params;
   return API.get(`/auth/users?page=${page}&limit=${limit}&role=${role}`).then(res => res.data);
 }
@@ -19,7 +19,8 @@ const postAuthOtpSend = (params) => {
 };
 
 const deleteAuthUser = (params) => {
-  return API.delete("/auth/users", params).then(res => res.data);
+  console.log("params", params)
+  return API.delete("/auth/users", { data: params }).then(res => res.data);
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -17,6 +17,7 @@ export default function userReducer(state = initialState, action) {
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
       const { accessToken } = payload
+      console.log("payload", payload)
       localStorage.setItem('token', accessToken);
       newState = Object.assign({}, state, { token: accessToken });
       break;

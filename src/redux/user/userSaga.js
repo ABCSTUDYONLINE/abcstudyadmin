@@ -17,17 +17,17 @@ function* signIn() {
   yield takeEvery(userType.SIGN_IN, function* ({ payload, history }) {
     try {
       const res = yield call(httpUser.login, payload); // api call
-      const { status } = res;
-      // if (status === 'ok') {
-      yield put({ type: userType.SIGN_IN_SUCCESS, payload: res });
-      history.push('/dashboard/categories');
-      // } else {
-      //   const { message } = res.data;
-      //   Modal.error({
-      //     title: 'Error',
-      //     content: `${message}!`,
-      //   });
-      // }
+      const { message } = res;
+      if (message == "success") {
+        yield put({ type: userType.SIGN_IN_SUCCESS, payload: res.data });
+        history.push('/dashboard/categories');
+      } else {
+        const { message } = res.data;
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
     } catch (e) { console.log(e) }
   });
 }
@@ -39,9 +39,6 @@ function* register() {
       const { message } = res;
       if (!message) {
         yield put({ type: userType.REGISTER_SUCCESS, payload: res });
-
-        // const { email } = payload;
-        // yield call(httpUser.postAuthOtpSend, {email: email});
 
         Modal.info({
           title: 'Successfull',
@@ -89,10 +86,10 @@ function* deleteAuthUser() {
   yield takeEvery(userType.DELETE_AUTH_USERS, function* ({ payload }) {
     try {
       const res = yield call(httpUser.deleteAuthUser, payload); // api cal
+      console.log("res---------", res)
       const { message } = res;
-      if (!message) {
+      if (message === 'Delete success!') {
         yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res });
-
         Modal.info({
           title: 'Successfull',
           content: `Delete user successfull ! .`,

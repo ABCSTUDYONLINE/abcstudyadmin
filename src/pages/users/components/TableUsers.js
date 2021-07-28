@@ -30,7 +30,7 @@ export default function TableUsers(props) {
 
   const onDelete = (userID) => {
     dispatch(deleteAuthUser({
-      userId: userID
+      "userId": userID
     }))
   }
 
