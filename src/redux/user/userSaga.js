@@ -38,7 +38,11 @@ function* getMe() {
         localStorage.setItem('profile', JSON.stringify(data));
         yield put({ type: userType.GET_ME_SUCCESS, payload: data });
       } else {
-        // yield put({ type: userType.SIGN_IN_ERROR, payload: res });
+        const { message } = res.data;
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
       }
     } catch (e) { console.log(e) }
   });
@@ -51,9 +55,6 @@ function* register() {
       const { message } = res;
       if (!message) {
         yield put({ type: userType.REGISTER_SUCCESS, payload: res });
-
-        // const { email } = payload;
-        // yield call(httpUser.postAuthOtpSend, {email: email});
 
         Modal.info({
           title: 'Successfull',
@@ -101,10 +102,10 @@ function* deleteAuthUser() {
   yield takeEvery(userType.DELETE_AUTH_USERS, function* ({ payload }) {
     try {
       const res = yield call(httpUser.deleteAuthUser, payload); // api cal
+      console.log("res---------", res)
       const { message } = res;
-      if (!message) {
+      if (message === 'Delete success!') {
         yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res });
-
         Modal.info({
           title: 'Successfull',
           content: `Delete user successfull ! .`,
