@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategories, putCategories } from '../../../redux/category/categoryAction';
 
+const { Option } = Select;
 
 export default function TableCate(props) {
   const [form] = Form.useForm();
@@ -15,7 +16,7 @@ export default function TableCate(props) {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(5)
+  const [limit] = useState(5)
 
   const [categoryIdUpdate, setCategoryIdUpdate] = useState()
 
@@ -68,7 +69,7 @@ export default function TableCate(props) {
       render: (id, category) =>
         <div>
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
-          <a style={{ cursor: 'pointer' }} onClick={() => onEdit(id, category)}>edit</a>
+          <a style={{ cursor: 'pointer', color: '#314CDB' }} onClick={() => onEdit(id, category)}>edit</a>
         </div>
     },
   ];
@@ -129,7 +130,10 @@ export default function TableCate(props) {
             name="levelCategory"
             rules={[{ required: true, message: 'Please input level category!' }]}
           >
-            <Input />
+            <Select defaultValue='web'>
+              <Option value="web">web</Option>
+              <Option value="mobile">mobile</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item

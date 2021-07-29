@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Button, Typography, DatePicker } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { register } from '../../redux/user/userAction';
 import * as moment from 'moment';
 const { Text } = Typography;
@@ -22,17 +22,6 @@ export default function NewTeacher() {
                 'birthDay': moment(values.birthDay._d).format('YYYY/MM/DD')
             }
         ));
-        // form.setFieldsValue({
-        //     firstName: '',
-        //     lastName: '',
-        //     username: '',
-        //     password: '',
-        //     email: '',
-        //     phoneNumber: '',
-        //     address: '',
-        //     role: '',
-        //     birthDay: ''
-        // });
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -121,7 +110,7 @@ export default function NewTeacher() {
                                 name='birthDay'
                                 rules={[{ required: true, message: 'Please input date of birth!' }]}
                             >
-                                <DatePicker format={'DD/MM/YYYY'} />
+                                <DatePicker style={{width: '100%'}} format={'DD/MM/YYYY'} />
                             </Form.Item>
                         </div>
                         <div style={{ width: 400 }}>

@@ -9,6 +9,14 @@ export function signIn({ payload, history, dispatch }) {
   };
 }
 
+export function getMe({ payload, history }) {
+  return {
+    type: userType.GET_ME,
+    payload,
+    history,
+  };
+}
+
 export function register(payload) {
   return {
     type: userType.REGISTER,

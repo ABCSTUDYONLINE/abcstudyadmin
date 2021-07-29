@@ -6,6 +6,7 @@ import { Modal } from 'antd'
 export default function* userSaga() {
   yield all([
     signIn(),
+    getMe(),
     signOut(),
     register(),
     getAuthUsers(),
@@ -16,18 +17,29 @@ export default function* userSaga() {
 function* signIn() {
   yield takeEvery(userType.SIGN_IN, function* ({ payload, history }) {
     try {
+      yield put({ type: userType.SIGN_IN_ERROR, payload: { message: '' } });
       const res = yield call(httpUser.login, payload); // api call
-      const { status } = res;
-      // if (status === 'ok') {
-      yield put({ type: userType.SIGN_IN_SUCCESS, payload: res });
-      history.push('/dashboard/categories');
-      // } else {
-      //   const { message } = res.data;
-      //   Modal.error({
-      //     title: 'Error',
-      //     content: `${message}!`,
-      //   });
-      // }
+      const { data } = res;
+      if (data !== null) {
+        yield put({ type: userType.SIGN_IN_SUCCESS, payload: res });
+      } else {
+        yield put({ type: userType.SIGN_IN_ERROR, payload: res });
+      }
+    } catch (e) { console.log(e) }
+  });
+}
+
+function* getMe() {
+  yield takeEvery(userType.GET_ME, function* ({ payload, history }) {
+    try {
+      const res = yield call(httpUser.getMe); // api call
+      const { data } = res;
+      if (data !== null) {
+        localStorage.setItem('profile', JSON.stringify(data));
+        yield put({ type: userType.GET_ME_SUCCESS, payload: data });
+      } else {
+        // yield put({ type: userType.SIGN_IN_ERROR, payload: res });
+      }
     } catch (e) { console.log(e) }
   });
 }

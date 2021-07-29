@@ -19,32 +19,44 @@ const routes = [
   //   component: Register
   // },
   {
-    path: '/dashboard',
+    path: '/dashboard/admin',
     component: Layout,
     routes: [
       {
-        path: '/dashboard/courses',
+        path: '/dashboard/admin/courses',
         exact: true,
         auth: true,
         component: Courses
       },
       {
-        path: '/dashboard/users',
+        path: '/dashboard/admin/users',
         exact: true,
         auth: true,
         component: Users
       },
       {
-        path: '/dashboard/categories',
+        path: '/dashboard/admin/categories',
         exact: true,
         auth: true,
         component: Categories
       },
       {
-        path: '/dashboard/new-teacher',
+        path: '/dashboard/admin/new-teacher',
         exact: true,
         auth: true,
         component: NewTeacher
+      },
+    ]
+  },
+  {
+    path: '/dashboard/teacher',
+    component: Layout,
+    routes: [
+      {
+        path: '/dashboard/teacher/courses',
+        exact: true,
+        auth: true,
+        component: Courses
       },
     ]
   },

@@ -34,6 +34,11 @@ export default function coursesReducer(state = initialState, action) {
       newState = Object.assign({}, state, { isChanged: changed });
       break;
 
+    case coursesType.PUT_IMAGE_COURSES_SUCCESS:
+      const { } = payload
+      newState = Object.assign({}, state, { isChanged: changed });
+      break;
+
     default:
       newState = state;
   }

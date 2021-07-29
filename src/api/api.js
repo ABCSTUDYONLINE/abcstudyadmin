@@ -5,8 +5,8 @@ const Api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   withCredentials: false,
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    Accept: '*/*',
+    "Content-Type": localStorage.getItem('contentType'),
   },
 });
 

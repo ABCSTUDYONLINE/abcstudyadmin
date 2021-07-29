@@ -14,6 +14,13 @@ export function putCourses(payload) {
   };
 }
 
+export function putImageCourses(payload) {
+  return {
+    type: coursesType.PUT_IMAGE_COURSES,
+    payload: payload,
+  };
+}
+
 export function getCourses(owner, page, limit) {
   return {
     type: coursesType.GET_COURSES,

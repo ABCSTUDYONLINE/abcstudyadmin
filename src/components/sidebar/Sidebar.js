@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {withRouter} from 'react-router-dom';
 import { Divider, Drawer, List } from '@material-ui/core';
-import listMenu from './ListItem';
+import listMenuAdmin from './ListMenuAdminItem';
+import listMenuTeacher from './ListMenuTeacherItem';
 import useStyles from './styles'
 import MenuItem from './MenuItem';
 import { NavLink } from "react-router-dom";
@@ -9,7 +10,15 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../logo.svg"
 function Sidebar() {
     const classes = useStyles();
+
+    const [role, setRole] = useState('admin');
     
+    useEffect(() => {
+      const profileExist =  JSON.parse(localStorage.getItem('profile'));
+      if (profileExist) {
+        setRole(profileExist.role);
+      }
+    }, []); 
     
     return (
         <Drawer
@@ -25,14 +34,12 @@ function Sidebar() {
         </div>
         <Divider/>
         <List className={classes.listItem}>
-          {listMenu.map(item => (
+          { (role === 'admin' ? listMenuAdmin : listMenuTeacher).map(item => (
             <NavLink to={item.path} exact={item.excat} className={classes.menuLink} key={item.path}>
                 <MenuItem name={item.name} divider/>
             </NavLink>
-            
           ))}
         </List>
-        
       </Drawer>
     )
 }

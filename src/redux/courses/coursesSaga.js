@@ -7,6 +7,7 @@ export default function* userSaga() {
   yield all([
     postCourses(),
     putCourses(),
+    putImageCourses(),
     getCourses(),
     deleteCourses(),
   ]);
@@ -17,7 +18,7 @@ function* postCourses() {
     try {
       const res = yield call(httpCourses.postCourses, payload);
       const { data, message } = res;
-      if (message === 'Success!') {
+      if (data !== null) {
         Modal.success({
           title: 'Success',
           content: 'You have added new courses successfully',
@@ -39,7 +40,7 @@ function* putCourses() {
       const res = yield call(httpCourses.putCourses, payload);
       const { data, message } = res;
       console.log(res)
-      if (message === 'This courses has updated success!') {
+      if (data !== null) {
         Modal.success({
           title: 'Success',
           content: 'You have updated courses successfully',
@@ -55,12 +56,35 @@ function* putCourses() {
   });
 }
 
+function* putImageCourses() {
+  yield takeEvery(coursesType.PUT_IMAGE_COURSES, function* ({ payload }) {
+    try {
+      console.log(payload);
+      const res = yield call(httpCourses.putImageCourses, payload);
+      const { data, message } = res;
+      console.log(res)
+      if (data !== null) {
+        Modal.success({
+          title: 'Success',
+          content: 'You have updated image courses successfully',
+        });
+        yield put({ type: coursesType.PUT_IMAGE_COURSES_SUCCESS, payload: {} });
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`,
+        });
+      }
+    } catch (e) { console.log(e) }
+  });
+}
+
 function* getCourses() {
   yield takeEvery(coursesType.GET_COURSES, function* ({ owner, page, limit }) {
     try {
       const res = yield call(httpCourses.getCourses, { owner, page, limit });
       const { data, message } = res;
-      if (message === 'Success!') {
+      if (data !== null) {
         yield put({ type: coursesType.GET_COURSES_SUCCESS, payload: { data: res.data.list, total: res.data.total } });
       } else {
         Modal.error({
@@ -77,8 +101,7 @@ function* deleteCourses() {
     try {
       const res = yield call(httpCourses.deleteCourses, coursesID);
       const { data, message } = res;
-      console.log(res)
-      if (message === 'Delete success!') {
+      if (data !== null) {
         Modal.success({
           title: 'Success',
           content: 'You have deleted courses successfully',

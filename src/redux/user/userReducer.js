@@ -4,6 +4,7 @@ import userType from './userType';
 const initialState = {
   loading: 0,
   token: '',
+  message: '',
   userId: '',
   users: [],
   total: 0,
@@ -16,9 +17,17 @@ export default function userReducer(state = initialState, action) {
   const changed = new Date().getTime()
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
-      const { accessToken } = payload
-      localStorage.setItem('token', accessToken);
-      newState = Object.assign({}, state, { token: accessToken });
+      const { data } = payload
+      newState = Object.assign({}, state, { token: data.accessToken });
+      break;
+
+    case userType.SIGN_IN_ERROR:
+      const { message } = payload
+      newState = Object.assign({}, state, { message: message });
+      break;
+
+    case userType.GET_ME_SUCCESS:
+      newState = Object.assign({}, state, { profile: payload });
       break;
 
     case userType.REGISTER_SUCCESS:
@@ -28,6 +37,7 @@ export default function userReducer(state = initialState, action) {
 
     case userType.SIGN_OUT_SUCCESS:
       localStorage.removeItem("token");
+      localStorage.removeItem("profile");
       break;
 
     case userType.GET_AUTT_USERS_SUCCESS:

@@ -8,31 +8,31 @@ import {
     Group as GroupIcon,
 }from '@material-ui/icons'
 
-const listMenu = [
+const listMenuAdmin = [
   {
     name: "Categories",
-    path: "/dashboard/categories",
+    path: "/dashboard/admin/categories",
     exact: true,
     icon: <CategoryIcon />,
     component: Categories,
   },
   {
     name: "Courses",
-    path: "/dashboard/courses",
+    path: "/dashboard/admin/courses",
     icon: <LibraryBooksIcon />,
     component: Courses,
   },
   {
     name: "Users",
-    path: "/dashboard/users",
+    path: "/dashboard/admin/users",
     icon: <GroupIcon />,
     component: Users,
   },
   {
     name: "New teacher",
-    path: "/dashboard/new-teacher",
+    path: "/dashboard/admin/new-teacher",
     icon: <GroupIcon />,
     component: Users,
   }
 ];
-export default listMenu
+export default listMenuAdmin

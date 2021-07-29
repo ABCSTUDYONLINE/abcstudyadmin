@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 export default {
     decodeJwt: (token) => {
         const base64Payload = token.split('.')[1]; // token you get
@@ -103,7 +104,7 @@ export default {
     findPriceRange(basePrice, source, configPrices) {
         const minPrice = this.findMinPrice(basePrice, source, configPrices)
         const maxPrice = this.findMaxPrice(basePrice, source, configPrices)
-        return minPrice == maxPrice ? minPrice : [minPrice, maxPrice]
+        return minPrice === maxPrice ? minPrice : [minPrice, maxPrice]
     },
 
     groupPriceConfigsBySizes(basePrice, source, configPrices) {

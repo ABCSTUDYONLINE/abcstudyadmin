@@ -4,6 +4,10 @@ const _prefix = '@user/';
 export default {
   SIGN_IN: _prefix + 'SIGN_IN',
   SIGN_IN_SUCCESS: _prefix + 'SIGN_IN_SUCCESS',
+  SIGN_IN_ERROR: _prefix + 'SIGN_IN_ERROR',
+
+  GET_ME: _prefix + 'GET_ME',
+  GET_ME_SUCCESS: _prefix + 'GET_ME_SUCCESS',
 
   REGISTER: _prefix + 'REGISTER',
   REGISTER_SUCCESS: _prefix + 'REGISTER_SUCCESS',

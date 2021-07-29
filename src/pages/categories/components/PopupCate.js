@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { postCategories, getCategories } from '../../../redux/category/categoryAction';
+import React from 'react';
+import { Form, Input, Button, Modal, Select } from 'antd';
+import { useDispatch } from 'react-redux';
+import { postCategories } from '../../../redux/category/categoryAction';
+
+const { Option } = Select;
 
 export default function PopupCate() {
 
@@ -26,6 +28,7 @@ export default function PopupCate() {
   const onFinishFailed = (errorInfo) => {
     setVisible(true);
   };
+
   return (
 
     <div>
@@ -62,7 +65,10 @@ export default function PopupCate() {
             name="levelCategory"
             rules={[{ required: true, message: 'Please input level category!' }]}
           >
-            <Input />
+            <Select defaultValue='web'>
+              <Option value="web">web</Option>
+              <Option value="mobile">mobile</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item
