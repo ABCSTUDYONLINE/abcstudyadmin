@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Image, Button, Form, Select, Input, Modal, Upload } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic } from '../../../redux/courses/coursesAction'
+import { getCourses, deleteCourses, putCourses, putImageCourses } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
 import * as moment from 'moment'
 // logo
@@ -14,7 +14,7 @@ const { Dragger } = Upload
 
 const { Option } = Select
 
-export default function TableSrc (props) {
+export default function TableLes (props) {
   const [form] = Form.useForm()
 
   const dataCourse = useSelector(state => state.courses.courses)
@@ -46,12 +46,8 @@ export default function TableSrc (props) {
     setPage(pagination.current)
   }
 
-  const onDelete = (courseId) => {
-    dispatch(deleteCourses(courseId))
-  }
-
-  const toTopic = (courseId) => {
-    dispatch(gotoTopic(courseId))
+  const onDelete = (coursesID) => {
+    dispatch(deleteCourses(coursesID))
   }
 
   const onEdit = (idCategory, course) => {
@@ -198,7 +194,7 @@ export default function TableSrc (props) {
         <div>
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
           {role === 1 ? <a style={{ cursor: 'pointer', color: '#314CDB', marginRight: 20 }} onClick={() => onEdit(id, course)}>edit</a> : null}
-          {role === 1 ? <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={() => toTopic(id)}>topics</a> : null}
+          {role === 1 ? <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={null}>topics</a> : null}
         </div>
     }
   ]

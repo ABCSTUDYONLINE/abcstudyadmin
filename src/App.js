@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import routes from './routes';
+/* eslint-disable no-unused-vars */
+import { Component } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import routes from './routes'
 // import './styles/style.scss';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 // import Spinner from './components/Spinner';
 import { showLoading } from './redux/layout/layoutSelector'
 
-function RouteWithSubRoutes(route) {
+const RouteWithSubRoutes = (route) => {
   return (
     <Route
       path={route.path}
@@ -16,16 +17,16 @@ function RouteWithSubRoutes(route) {
         return pathname === '/' ? <Redirect to="/login"/> : <route.component {...props} routes={route.routes} />
       }}
     />
-  );
+  )
 }
 
 class App extends Component {
   // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     return (
       <>
         {/* <Spinner active={this.props.isLoading}/> */}
@@ -33,7 +34,7 @@ class App extends Component {
           {routes.map((item, index) => (<RouteWithSubRoutes key={index} {...item}/>))}
         </Switch>
       </>
-    );
+    )
   }
 }
 
@@ -43,5 +44,5 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
 // export default App;

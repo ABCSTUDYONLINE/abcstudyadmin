@@ -1,10 +1,10 @@
-const _prefix = '@courses/';
+const _prefix = '@courses/'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   POST_COURSES: _prefix + 'POST_COURSES',
   POST_COURSES_SUCCESS: _prefix + 'POST_COURSES_SUCCESS',
-  
+
   PUT_COURSES: _prefix + 'PUT_COURSES',
   PUT_COURSES_SUCCESS: _prefix + 'PUT_COURSES_SUCCESS',
 
@@ -19,4 +19,16 @@ export default {
 
   LOADING_SHOW: _prefix + 'LOADING_SHOW',
   LOADING_HIDE: _prefix + 'LOADING_HIDE',
-};
+
+  GO_TO_TOPIC: _prefix + 'GO_TO_TOPIC',
+  GO_TO_TOPIC_SUCCESS: _prefix + 'GO_TO_TOPIC_SUCCESS',
+
+  GO_BACK_TOPIC: _prefix + 'GO_BACK_TOPIC',
+  GO_BACK_TOPIC_SUCCESS: _prefix + 'GO_BACK_TOPIC_SUCCESS',
+
+  GO_TO_LESSON: _prefix + 'GO_TO_LESSON',
+  GO_TO_LESSON_SUCCESS: _prefix + 'GO_TO_LESSON_SUCCESS',
+
+  GO_BACK_COURSE: _prefix + 'GO_BACK_COURSE',
+  GO_BACK_COURSE_SUCCESS: _prefix + 'GO_BACK_COURSE_SUCCESS'
+}

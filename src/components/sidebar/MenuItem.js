@@ -1,16 +1,17 @@
-import { ListItem, ListItemText } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+/* eslint-disable no-unused-vars */
+import { ListItem, ListItemText } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(() =>({
-    cName:{
-        textAlign: 'center',
-    }
+const useStyles = makeStyles(() => ({
+  cName: {
+    textAlign: 'center'
+  }
 }))
 const MenuItem = (props) => {
-    const { path,name }= props;
-    const classes= useStyles();
-    return (
-            <ListItem 
+  const { path, name } = props
+  const classes = useStyles()
+  return (
+            <ListItem
                 button
                 to={path}
                 {...props}
@@ -18,6 +19,6 @@ const MenuItem = (props) => {
             >
                 <ListItemText>{name}</ListItemText>
             </ListItem>
-    )
+  )
 }
 export default MenuItem

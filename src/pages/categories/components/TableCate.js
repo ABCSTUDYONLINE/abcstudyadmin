@@ -1,19 +1,20 @@
+/* eslint-disable no-unused-vars */
 
-import React, { useState, useEffect } from 'react';
-import { Table, Form, Input, Button, Select, Modal } from 'antd';
-import 'antd/dist/antd.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCategories, deleteCategories, putCategories } from '../../../redux/category/categoryAction';
+import React, { useState, useEffect } from 'react'
+import { Table, Form, Input, Button, Select, Modal } from 'antd'
+import 'antd/dist/antd.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCategories, deleteCategories, putCategories } from '../../../redux/category/categoryAction'
 
-const { Option } = Select;
+const { Option } = Select
 
-export default function TableCate(props) {
-  const [form] = Form.useForm();
+export default function TableCate (props) {
+  const [form] = Form.useForm()
 
-  const dataCategory = useSelector(state => state.category.categories);
-  const totalCategory = useSelector(state => state.category.total);
-  const isChanged = useSelector(state => state.category.isChanged);
-  const dispatch = useDispatch();
+  const dataCategory = useSelector(state => state.category.categories)
+  const totalCategory = useSelector(state => state.category.total)
+  const isChanged = useSelector(state => state.category.isChanged)
+  const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
   const [limit] = useState(5)
@@ -21,27 +22,27 @@ export default function TableCate(props) {
   const [categoryIdUpdate, setCategoryIdUpdate] = useState()
 
   const getDataCategory = () => {
-    dispatch(getCategories(page, limit));
+    dispatch(getCategories(page, limit))
   }
   useEffect(() => {
-    getDataCategory();
+    getDataCategory()
   }, [page, limit, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
-    setPage(pagination.current);
+    setPage(pagination.current)
   }
 
   const onDelete = (idCategory) => {
-    dispatch(deleteCategories(idCategory));
+    dispatch(deleteCategories(idCategory))
   }
 
   const onEdit = (idCategory, category) => {
-    setCategoryIdUpdate(idCategory);
+    setCategoryIdUpdate(idCategory)
     form.setFieldsValue({
       categoryName: category.categoryName,
       levelCategory: category.levelCategory
-    });
-    setVisible(true);
+    })
+    setVisible(true)
   }
 
   const columns = [
@@ -49,19 +50,19 @@ export default function TableCate(props) {
       title: 'Level category',
       dataIndex: 'levelCategory',
       key: 'levelCategory',
-      sorter: true,
+      sorter: true
     },
     {
       title: 'Category Name',
       dataIndex: 'categoryName',
       key: 'categoryName',
-      sorter: true,
+      sorter: true
     },
     {
       title: 'Number course',
       dataIndex: 'courses',
       key: 'courses',
-      sorter: true,
+      sorter: true
     },
     {
       title: 'Action',
@@ -71,28 +72,28 @@ export default function TableCate(props) {
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
           <a style={{ cursor: 'pointer', color: '#314CDB' }} onClick={() => onEdit(id, category)}>edit</a>
         </div>
-    },
-  ];
+    }
+  ]
 
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   const handleCancel = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   const onFinish = (values) => {
     dispatch(putCategories(
       {
-        'categoryId': categoryIdUpdate,
-        'categoryName': values.categoryName,
-        'levelCategory': values.levelCategory
+        categoryId: categoryIdUpdate,
+        categoryName: values.categoryName,
+        levelCategory: values.levelCategory
       }))
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   const onFinishFailed = (errorInfo) => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   return (
     <div>
@@ -107,13 +108,13 @@ export default function TableCate(props) {
         onCancel={handleCancel}
         okButtonProps={{
           style: {
-            display: "none",
-          },
+            display: 'none'
+          }
         }}
         cancelButtonProps={{
           style: {
-            display: "none",
-          },
+            display: 'none'
+          }
         }}
       >
         <Form

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import TableCate from './components/TableCate';
-import { withRouter } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react'
+import TableCate from './components/TableCate'
+import { withRouter } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader'
-import { Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import PopupCate from './components/PopupCate';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../../redux/category/categoryAction';
+import { Paper } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import PopupCate from './components/PopupCate'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCategories } from '../../redux/category/categoryAction'
 
 const useStyles = makeStyles(theme => ({
   pageContent: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Categories() {
-  const classes = useStyles();
+function Categories () {
+  const classes = useStyles()
 
   return (
     <div>

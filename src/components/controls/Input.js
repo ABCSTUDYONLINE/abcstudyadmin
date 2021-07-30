@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
-import { TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
 
-export default function Input(props) {
-    const { name, label, value,error=null, onChange, ...other } = props;
-    return (
+export default function Input (props) {
+  const { name, label, value, error = null, onChange, ...other } = props
+  return (
         <TextField
             variant="outlined"
             label={label}
@@ -11,7 +12,7 @@ export default function Input(props) {
             value={value}
             onChange={onChange}
             {...other}
-            {...(error && {error:true,helperText:error})}
+            {...(error && { error: true, helperText: error })}
         />
-    )
+  )
 }

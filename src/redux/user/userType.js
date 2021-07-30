@@ -1,4 +1,4 @@
-const _prefix = '@user/';
+const _prefix = '@user/'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -22,5 +22,5 @@ export default {
   DELETE_AUTH_USERS_SUCCESS: _prefix + 'DELETE_AUTH_USERS_SUCCESS',
 
   LOADING_SHOW: _prefix + 'LOADING_SHOW',
-  LOADING_HIDE: _prefix + 'LOADING_HIDE',
-};
+  LOADING_HIDE: _prefix + 'LOADING_HIDE'
+}

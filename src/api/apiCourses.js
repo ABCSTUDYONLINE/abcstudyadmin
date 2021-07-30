@@ -1,36 +1,42 @@
-import API from './api';
+/* eslint-disable no-undef */
+import API from './api'
 
-const postCourses = (params) => {
-    localStorage.setItem('contentType', 'multipart/form-data');
-    return API.post('/courses', params).then(res => res.data);
-};
+const postCourses = async (params) => {
+  localStorage.setItem('contentType', 'multipart/form-data')
+  const res = await API.post('/courses', params)
+  return res.data
+}
 
-const putCourses = (params) => {
-    localStorage.setItem('contentType', 'application/json');
-    return API.put('/courses', params).then(res => res.data);
-};
+const putCourses = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.put('/courses', params)
+  return res.data
+}
 
-const putImageCourses = (params) => {
-    localStorage.setItem('contentType', 'multipart/form-data');
-    return API.put('/courses/background', params).then(res => res.data);
-};
+const putImageCourses = async (params) => {
+  localStorage.setItem('contentType', 'multipart/form-data')
+  const res = await API.put('/courses/background', params)
+  return res.data
+}
 
-const getCourses = (params) => {
-    localStorage.setItem('contentType', 'application/json');
-    const { owner, page, limit } = params;
-    return API.get(`/courses?owner=${owner}&page=${page}&limit=${limit}`).then(res => res.data);
-};
+const getCourses = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const { owner, page, limit } = params
+  const res = await API.get(`/courses?owner=${owner}&page=${page}&limit=${limit}`)
+  return res.data
+}
 
-const deleteCourses = (courseID) => {
-    localStorage.setItem('contentType', 'application/json');
-    return API.delete(`/courses?courseId=${courseID}`).then(res => res.data);
-};
+const deleteCourses = async (courseID) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.delete(`/courses?courseId=${courseID}`)
+  return res.data
+}
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    postCourses,
-    putCourses,
-    putImageCourses,
-    getCourses,
-    deleteCourses
+  postCourses,
+  putCourses,
+  putImageCourses,
+  getCourses,
+  deleteCourses
 }

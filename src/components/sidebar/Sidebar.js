@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import {withRouter} from 'react-router-dom';
-import { Divider, Drawer, List } from '@material-ui/core';
-import listMenuAdmin from './ListMenuAdminItem';
-import listMenuTeacher from './ListMenuTeacherItem';
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react'
+import { withRouter, NavLink } from 'react-router-dom'
+import { Divider, Drawer, List } from '@material-ui/core'
+import listMenuAdmin from './ListMenuAdminItem'
+import listMenuTeacher from './ListMenuTeacherItem'
 import useStyles from './styles'
-import MenuItem from './MenuItem';
-import { NavLink } from "react-router-dom";
+import MenuItem from './MenuItem'
 
-import Logo from "../../logo.svg"
-function Sidebar() {
-    const classes = useStyles();
+import Logo from '../../logo.svg'
+function Sidebar () {
+  const classes = useStyles()
 
-    const [role, setRole] = useState('admin');
-    
-    useEffect(() => {
-      const profileExist =  JSON.parse(localStorage.getItem('profile'));
-      if (profileExist) {
-        setRole(profileExist.role);
-      }
-    }, []); 
-    
-    return (
+  const [role, setRole] = useState('admin')
+
+  useEffect(() => {
+    const profileExist = JSON.parse(localStorage.getItem('profile'))
+    if (profileExist) {
+      setRole(profileExist.role)
+    }
+  }, [])
+
+  return (
         <Drawer
         className={classes.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper,
+          paper: classes.drawerPaper
         }}
         anchor="left"
       >
@@ -41,7 +42,7 @@ function Sidebar() {
           ))}
         </List>
       </Drawer>
-    )
+  )
 }
 
 export default withRouter(Sidebar)

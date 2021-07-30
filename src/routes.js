@@ -1,17 +1,17 @@
 // import React from 'react';
-import Layout from './components/layout/Layout';
+import Layout from './components/layout/Layout'
 // import Register from './pages/register/Register';
-import NotFound from './pages/error/Error';
-import Login from './pages/login/Login';
-import Categories from './pages/categories/Categories';
-import Users from './pages/users/Users'; 
-import Courses from './pages/courses/Courses'; 
-import NewTeacher from './pages/new-teacher/NewTeacher'; 
+import NotFound from './pages/error/Error'
+import Login from './pages/login/Login'
+import Categories from './pages/categories/Categories'
+import Users from './pages/users/Users'
+import Courses from './pages/courses/Courses'
+import NewTeacher from './pages/new-teacher/NewTeacher'
 const routes = [
   {
     path: '/login',
     exact: true,
-    component: Login,
+    component: Login
   },
   // {
   //   path: '/register',
@@ -45,7 +45,7 @@ const routes = [
         exact: true,
         auth: true,
         component: NewTeacher
-      },
+      }
     ]
   },
   {
@@ -57,12 +57,12 @@ const routes = [
         exact: true,
         auth: true,
         component: Courses
-      },
+      }
     ]
   },
   {
     component: NotFound
   }
-];
+]
 
-export default routes;
+export default routes

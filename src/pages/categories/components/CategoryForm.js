@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 
-export default function CategoryForm() {
-    return (
+export default function CategoryForm () {
+  return (
         <div>
-            
+
         </div>
-    )
+  )
 }

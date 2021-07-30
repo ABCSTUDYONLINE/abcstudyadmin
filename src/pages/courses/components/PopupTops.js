@@ -1,15 +1,15 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { Form, Input, Button, Modal, Select } from 'antd'
-import { useDispatch } from 'react-redux'
-import { postCategories } from '../../../redux/category/categoryAction'
-
-const { Option } = Select
+import React, { useEffect } from 'react'
+import { Form, Input, Button, Modal } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { postTopic } from '../../../redux/topics/topicsAction'
+import { gobackCourse } from '../../../redux/courses/coursesAction'
 
 export default function PopupCate () {
   const dispatch = useDispatch()
-
   const [visible, setVisible] = React.useState(false)
+  const courseId = useSelector(state => state.courses.courseId)
 
   const showModal = () => {
     setVisible(true)
@@ -20,7 +20,8 @@ export default function PopupCate () {
   }
 
   const onFinish = (values) => {
-    dispatch(postCategories(values))
+    values.courseId = courseId
+    dispatch(postTopic(values))
     setVisible(false)
   }
 
@@ -28,16 +29,22 @@ export default function PopupCate () {
     setVisible(true)
   }
 
-  return (
+  const goBack = () => {
+    dispatch(gobackCourse())
+  }
 
+  return (
     <div>
       <div style={{ display: 'flex', float: 'right', marginBottom: 10 }}>
+        <Button type="primary" onClick={() => goBack()} style={{ borderRadius: 6, right: 8 }}>
+          Back
+        </Button>
         <Button type="primary" onClick={showModal} style={{ borderRadius: 6 }}>
-          New category
+          New Topic
         </Button>
       </div>
       <Modal
-        title="New category"
+        title="New course"
         visible={visible}
         onCancel={handleCancel}
         okButtonProps={{
@@ -60,27 +67,16 @@ export default function PopupCate () {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            label="Level category"
-            name="levelCategory"
-            rules={[{ required: true, message: 'Please input level category!' }]}
-          >
-            <Select defaultValue='web'>
-              <Option value="web">web</Option>
-              <Option value="mobile">mobile</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Category name"
-            name="categoryName"
-            rules={[{ required: true, message: 'Please input category name!' }]}
+            label="Topic name"
+            name="topicName"
+            rules={[{ required: true, message: 'Please input topic name!' }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit" style={{ borderRadius: 6 }}>
-              New
+              Add
             </Button>
           </Form.Item>
         </Form>

@@ -1,34 +1,35 @@
-import React from 'react';
-import { Form, Input, Button, Typography, DatePicker } from 'antd';
-import { useDispatch } from 'react-redux';
-import { register } from '../../redux/user/userAction';
-import * as moment from 'moment';
-const { Text } = Typography;
+/* eslint-disable no-unused-vars */
+import React from 'react'
+import { Form, Input, Button, Typography, DatePicker } from 'antd'
+import { useDispatch } from 'react-redux'
+import { register } from '../../redux/user/userAction'
+import * as moment from 'moment'
+const { Text } = Typography
 
-export default function NewTeacher() {
-    const [form] = Form.useForm();
-    const dispatch = useDispatch();
-    const onFinish = (values) => {
-        dispatch(register(
-            {
-                'firstName': values.firstName,
-                'lastName': values.lastName,
-                'username': values.username,
-                'password': values.password,
-                'email': values.email,
-                'phoneNumber': values.phoneNumber,
-                'address': values.address,
-                'role': 'teacher',
-                'birthDay': moment(values.birthDay._d).format('YYYY/MM/DD')
-            }
-        ));
-    };
+export default function NewTeacher () {
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
+  const onFinish = (values) => {
+    dispatch(register(
+      {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        username: values.username,
+        password: values.password,
+        email: values.email,
+        phoneNumber: values.phoneNumber,
+        address: values.address,
+        role: 'teacher',
+        birthDay: moment(values.birthDay._d).format('YYYY/MM/DD')
+      }
+    ))
+  }
 
-    const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo) => {
 
-    };
+  }
 
-    return (
+  return (
         <div style={{ backgroundColor: '#FFF', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 600, flexDirection: 'column' }}>
             <div style={{ height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ fontSize: 32, fontWeight: 500 }}>New teacher</Text>
@@ -110,7 +111,7 @@ export default function NewTeacher() {
                                 name='birthDay'
                                 rules={[{ required: true, message: 'Please input date of birth!' }]}
                             >
-                                <DatePicker style={{width: '100%'}} format={'DD/MM/YYYY'} />
+                                <DatePicker style={{ width: '100%' }} format={'DD/MM/YYYY'} />
                             </Form.Item>
                         </div>
                         <div style={{ width: 400 }}>
@@ -133,5 +134,5 @@ export default function NewTeacher() {
                 </Form>
             </div>
         </div>
-    )
+  )
 }
