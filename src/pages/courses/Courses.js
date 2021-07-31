@@ -24,49 +24,51 @@ function Courses () {
   const classes = useStyles()
   const goto = useSelector(state => state.courses.goto)
   const Greeting = (props) => {
-    if (localStorage.getItem('profile').role === 'admin') {
+    if (JSON.parse(localStorage.getItem('profile')).role === 'admin') {
       return (
         <div>
           <PopupSrs />
           <TableSrs />
         </div>
       )
-    }
-    const next = props.goto
-    if (next === 0) {
-      return (
+    } {
+      const next = props.goto
+      if (next === 0) {
+        return (
         <div>
           <PopupSrs />
           <TableSrs />
         </div>
-      )
-    } else if (next === 1) {
-      return (
+        )
+      } else if (next === 1) {
+        return (
         <div>
           <PopupTops />
           <TableTops />
         </div>
-      )
-    } else {
-      return (
+        )
+      } else {
+        return (
         <div>
-          <PopupSrs />
-          <TableSrs />
+          <PopupLes />
+          <TableLes />
         </div>
-      )
+        )
+      }
     }
   }
 
   const title = () => {
-    if (localStorage.getItem('profile').role === 'admin') {
+    if (JSON.parse(localStorage.getItem('profile')).role === 'admin') {
       return 'Courses management'
-    }
-    if (goto === 0) {
-      return 'Courses management'
-    } else if (goto === 1) {
-      return 'Topics management'
     } else {
-      return 'Lessons management'
+      if (goto === 0) {
+        return 'Courses management'
+      } else if (goto === 1) {
+        return 'Topics management'
+      } else {
+        return 'Lessons management'
+      }
     }
   }
 

@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
-import { Table, Image, Button, Form, Select, Input, Modal, Upload } from 'antd'
+import { Table, Image, Button, Form, Select, Input, Modal, Upload, Spin } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTopics, deleteTopic, putTopic } from '../../../redux/topics/topicsAction'
+import { gotoLesson } from '../../../redux/courses/coursesAction'
+import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
 
 export default function TableTops (props) {
@@ -14,6 +16,7 @@ export default function TableTops (props) {
   const totalCourse = useSelector(state => state.topics.total)
   const isChanged = useSelector(state => state.topics.isChanged)
   const courseId = useSelector(state => state.courses.courseId)
+  const isLoading = useSelector(state => state.topics.loading)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
@@ -63,6 +66,10 @@ export default function TableTops (props) {
     setVisible(true)
   }
 
+  const toLesson = (topicId) => {
+    dispatch(gotoLesson(topicId))
+  }
+
   const columns = [
     {
       title: 'Name topic',
@@ -84,7 +91,7 @@ export default function TableTops (props) {
         <div>
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
           <a style={{ cursor: 'pointer', color: '#314CDB', marginRight: 20 }} onClick={() => onEdit(id, topic)}>edit</a>
-          <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={null}>lessons</a>
+          <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={() => toLesson(id)}>lessons</a>
         </div>
     }
   ]
@@ -134,6 +141,7 @@ export default function TableTops (props) {
           </Form.Item>
         </Form>
       </Modal>
+      <LoadingDialog isLoading={isLoading === 1} />
     </div>
   )
 }

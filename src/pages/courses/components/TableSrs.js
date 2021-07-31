@@ -6,6 +6,7 @@ import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
+import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
 // logo
 import logo from '../../login/logo.svg'
@@ -21,6 +22,7 @@ export default function TableSrc (props) {
   const totalCourse = useSelector(state => state.courses.total)
   const isChanged = useSelector(state => state.courses.isChanged)
   const dataCategory = useSelector(state => state.category.categories)
+  const isLoading = useSelector(state => state.courses.loading)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
@@ -317,6 +319,7 @@ export default function TableSrc (props) {
           </Form.Item>
         </Form>
       </Modal>
+      <LoadingDialog isLoading={isLoading === 1} />
     </div>
   )
 }

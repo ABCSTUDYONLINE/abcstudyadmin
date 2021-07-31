@@ -15,10 +15,10 @@ export function gobackTopic (payload) {
   }
 }
 
-export function gotoLesson (payload) {
+export function gotoLesson (topicId) {
   return {
     type: coursesType.GO_TO_LESSON,
-    payload: payload
+    topicId: topicId
   }
 }
 

@@ -39,9 +39,9 @@ export function getAuthUsers (page, limit, role) {
   }
 }
 
-export function deleteAuthUser (payload) {
+export function deleteAuthUser (userId) {
   return {
     type: userType.DELETE_AUTH_USERS,
-    payload
+    userId: userId
   }
 }

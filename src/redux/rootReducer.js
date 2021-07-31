@@ -13,6 +13,9 @@ import coursesType from './courses/coursesType'
 import topicsReducer from './topics/topicsReducer'
 import topicsType from './topics/topicsType'
 
+import lessonsReducer from './lessons/lessonsReducer'
+import lessonsType from './lessons/lessonsType'
+
 import layoutReducer from './layout/layoutReducer'
 import layoutType from './layout/layoutType'
 
@@ -21,6 +24,7 @@ const rootReducer = combineReducers({
   category: filterActions(categoryReducer, Object.values(categoryType)),
   courses: filterActions(coursesReducer, Object.values(coursesType)),
   topics: filterActions(topicsReducer, Object.values(topicsType)),
+  lessons: filterActions(lessonsReducer, Object.values(lessonsType)),
   layout: filterActions(layoutReducer, Object.values(layoutType))
 })
 

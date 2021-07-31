@@ -32,9 +32,9 @@ const postAuthOtpSend = async (params) => {
   return res.data
 }
 
-const deleteAuthUser = async (params) => {
+const deleteAuthUser = async (userId) => {
   localStorage.setItem('contentType', 'application/json')
-  const res = await API.delete('/auth/users', params)
+  const res = await API.delete(`/auth/users?userId=${userId}`)
   return res.data
 }
 

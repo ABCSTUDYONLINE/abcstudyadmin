@@ -49,11 +49,11 @@ export default function userReducer (state = initialState, action) {
       break
 
     case userType.LOADING_SHOW:
-      newState = Object.assign({}, state, { loading: state.loading++ })
+      newState = Object.assign({}, state, { loading: 1 })
       break
 
     case userType.LOADING_HIDE:
-      newState = Object.assign({}, state, { loading: state.loading-- })
+      newState = Object.assign({}, state, { loading: 0 })
       break
     default:
       newState = state

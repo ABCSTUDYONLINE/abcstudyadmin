@@ -32,6 +32,14 @@ export default function categoryReducer (state = initialState, action) {
     case categoryType.GET_CATEGORIES_DETAIL_CATEGORY_SUCCESS:
       break
 
+    case categoryType.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: 1 })
+      break
+
+    case categoryType.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: 0 })
+      break
+
     default:
       newState = state
   }

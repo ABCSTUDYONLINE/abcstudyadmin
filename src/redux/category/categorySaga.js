@@ -16,6 +16,7 @@ export default function * userSaga () {
 function * postCategories () {
   yield takeEvery(categoryType.POST_CATEGORIES, function * ({ payload }) {
     try {
+      yield put({ type: categoryType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCategory.postCategories, payload)
       const { data, message } = res
       if (data !== null) {
@@ -30,13 +31,18 @@ function * postCategories () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * putCategories () {
   yield takeEvery(categoryType.PUT_CATEGORIES, function * ({ payload }) {
     try {
+      yield put({ type: categoryType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCategory.putCategories, payload)
       const { data, message } = res
       console.log(res)
@@ -52,13 +58,18 @@ function * putCategories () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * getCategories () {
   yield takeEvery(categoryType.GET_CATEGORIES, function * ({ page, limit }) {
     try {
+      yield put({ type: categoryType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCategory.getCategories, { page, limit })
       const { data, message } = res
       if (data !== null) {
@@ -69,13 +80,18 @@ function * getCategories () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * deleteCategories () {
   yield takeEvery(categoryType.DELETE_CATEGORIES, function * ({ categoryID }) {
     try {
+      yield put({ type: categoryType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCategory.deleteCategories, categoryID)
       const { data, message } = res
       console.log(res)
@@ -91,7 +107,11 @@ function * deleteCategories () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: categoryType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 

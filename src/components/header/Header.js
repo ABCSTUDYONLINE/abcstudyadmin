@@ -6,6 +6,7 @@ import { withRouter, useHistory } from 'react-router'
 import { PowerSettingsNew as PowerSettingsNewIcon } from '@material-ui/icons'
 import { useDispatch } from 'react-redux'
 import { signOut } from '../../redux/user/userAction'
+import { Menu, Dropdown } from 'antd'
 
 import useStyles from './styles'
 function Header () {
@@ -26,6 +27,21 @@ function Header () {
     }
   }, [])
 
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer">
+          profile
+        </a>
+      </Menu.Item>
+      <Menu.Item onClick={() => logout()}>
+        <a target="_blank" rel="noopener noreferrer">
+          logout
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed"className={classes.appBar}>
@@ -34,10 +50,10 @@ function Header () {
             <Grid item sm>
             </Grid>
           </Grid>
-          <InputLabel style={{ color: 'white' }}>{name}</InputLabel>
-          <IconButton color="inherit" onClick={() => logout()}>
+          <InputLabel style={{ color: 'white', marginRight: 10 }}>{name}</InputLabel>
+          <Dropdown overlay={menu} placement="bottomRight" arrow>
             <PowerSettingsNewIcon />
-          </IconButton>
+          </Dropdown>
         </Toolbar>
       </AppBar>
     </div>

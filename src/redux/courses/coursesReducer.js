@@ -53,6 +53,14 @@ export default function coursesReducer (state = initialState, action) {
       newState = Object.assign({}, state, { goto: 0 })
       break
 
+    case coursesType.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: 1 })
+      break
+
+    case coursesType.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: 0 })
+      break
+
     default:
       newState = state
   }

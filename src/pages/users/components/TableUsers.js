@@ -5,12 +5,14 @@ import { Table, Radio } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuthUsers, deleteAuthUser } from '../../../redux/user/userAction'
+import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
 
 export default function TableUsers (props) {
   const dataCategory = useSelector(state => state.user.users)
   const totalCategory = useSelector(state => state.user.total)
   const isChanged = useSelector(state => state.user.isChanged)
+  const isLoading = useSelector(state => state.user.loading)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
@@ -28,10 +30,8 @@ export default function TableUsers (props) {
     setPage(pagination.current)
   }
 
-  const onDelete = (userID) => {
-    dispatch(deleteAuthUser({
-      userId: userID
-    }))
+  const onDelete = (userId) => {
+    dispatch(deleteAuthUser(userId))
   }
 
   const columns = [
@@ -99,6 +99,7 @@ export default function TableUsers (props) {
         pageSize: 5,
         total: totalCategory
       }} />
+      <LoadingDialog isLoading={isLoading === 1} />
     </div>
   )
 }

@@ -21,6 +21,7 @@ export default function * userSaga () {
 function * postCourses () {
   yield takeEvery(coursesType.POST_COURSES, function * ({ payload }) {
     try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCourses.postCourses, payload)
       const { data, message } = res
       if (data !== null) {
@@ -35,13 +36,18 @@ function * postCourses () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * putCourses () {
   yield takeEvery(coursesType.PUT_COURSES, function * ({ payload }) {
     try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCourses.putCourses, payload)
       const { data, message } = res
       console.log(res)
@@ -57,14 +63,18 @@ function * putCourses () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * putImageCourses () {
   yield takeEvery(coursesType.PUT_IMAGE_COURSES, function * ({ payload }) {
     try {
-      console.log(payload)
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCourses.putImageCourses, payload)
       const { data, message } = res
       console.log(res)
@@ -80,13 +90,18 @@ function * putImageCourses () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * getCourses () {
   yield takeEvery(coursesType.GET_COURSES, function * ({ owner, page, limit }) {
     try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCourses.getCourses, { owner, page, limit })
       const { data, message } = res
       if (data !== null) {
@@ -97,13 +112,18 @@ function * getCourses () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * deleteCourses () {
   yield takeEvery(coursesType.DELETE_COURSES, function * ({ courseId }) {
     try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
       const res = yield call(httpCourses.deleteCourses, courseId)
       const { data, message } = res
       if (data !== null) {
@@ -118,7 +138,11 @@ function * deleteCourses () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
@@ -139,10 +163,10 @@ function * gobackTopic () {
 }
 
 function * gotoLesson () {
-  yield takeEvery(coursesType.GO_TO_LESSON, function * ({ lessonId }) {
+  yield takeEvery(coursesType.GO_TO_LESSON, function * ({ topicId }) {
     try {
-      if (lessonId !== '') {
-        yield put({ type: coursesType.GO_TO_LESSON_SUCCESS, payload: { lessonId } })
+      if (topicId !== '') {
+        yield put({ type: coursesType.GO_TO_LESSON_SUCCESS, payload: { topicId: topicId } })
       }
     } catch (e) { console.log(e) }
   })

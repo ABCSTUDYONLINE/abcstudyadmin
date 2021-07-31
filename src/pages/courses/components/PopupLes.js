@@ -3,21 +3,16 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Select, Modal, Upload } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategories } from '../../../redux/category/categoryAction'
-import { postCourses } from '../../../redux/courses/coursesAction'
+import { postLesson } from '../../../redux/lessons/lessonsAction'
 import { UploadOutlined } from '@ant-design/icons'
+import { gobackTopic } from '../../../redux/courses/coursesAction'
 
 const { Option } = Select
 
 export default function PopupCate () {
   const dispatch = useDispatch()
   const [visible, setVisible] = React.useState(false)
-  const dataCategory = useSelector(state => state.category.categories)
-  const [role] = useState(JSON.parse(localStorage.getItem('profile')).role === 'teacher' ? 1 : 0)
-
-  useEffect(() => {
-    dispatch(getCategories(1, 100))
-  }, [])
+  const topicId = useSelector(state => state.courses.topicId)
 
   const showModal = () => {
     setVisible(true)
@@ -30,14 +25,10 @@ export default function PopupCate () {
   const onFinish = (values) => {
     const formData = new FormData()
     formData.append('file', values.file[0].originFileObj)
-    formData.append('categoryId', values.categoryId)
-    formData.append('courseName', values.courseName)
-    formData.append('shortCourseDescription', values.shortCourseDescription)
-    formData.append('detailCourseDescription', values.detailCourseDescription)
-    formData.append('whatWillLearn', values.whatWillLearn)
-    formData.append('requirements', values.requirements)
-    formData.append('fee', values.fee)
-    dispatch(postCourses(formData))
+    formData.append('topicId', topicId.toString())
+    formData.append('lessonName', values.lessonName)
+    formData.append('lessonDescription', values.lessonDescription)
+    dispatch(postLesson(formData))
     setVisible(false)
   }
 
@@ -61,17 +52,22 @@ export default function PopupCate () {
     return e && e.fileList
   }
 
+  const goBack = () => {
+    dispatch(gobackTopic())
+  }
+
   return (
     <div>
-      {role === 1
-        ? <div style={{ display: 'flex', float: 'right', marginBottom: 10 }}>
+      <div style={{ display: 'flex', float: 'right', marginBottom: 10 }}>
+        <Button type="primary" onClick={() => goBack()} style={{ borderRadius: 6, right: 8 }}>
+          Back
+        </Button>
         <Button type="primary" onClick={showModal} style={{ borderRadius: 6 }}>
-          New Course
+          New Lesson
         </Button>
       </div>
-        : null}
       <Modal
-        title="New course"
+        title="New lesson"
         visible={visible}
         onCancel={handleCancel}
         okButtonProps={{
@@ -95,83 +91,30 @@ export default function PopupCate () {
         >
           <Form.Item
             name="file"
-            label="Coure image"
+            label="Lesson video"
             valuePropName="fileList"
             getValueFromEvent={normFile}
-            rules={[{ required: true, message: 'Please upload course image!' }]}
+            rules={[{ required: true, message: 'Please upload video for lesson!' }]}
           >
             <Upload multiple={false} customRequest={dummyRequest} name="logo" action="/upload.do" listType="picture">
               <Button icon={<UploadOutlined />}>Click to upload</Button>
             </Upload>
           </Form.Item>
-
           <Form.Item
-            label="Category"
-            name="categoryId"
-            rules={[{ required: true, message: 'Please input category!' }]}
-          >
-            <Select allowClear filterOption={(inputValue, option) =>
-              option.props.children
-                .toString()
-                .toLowerCase()
-                .includes(inputValue.toLowerCase())
-              }
-              showSearch
-              >
-              {dataCategory.map(option => (
-                <Option value={option.id}>{option.categoryName}</Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Course name"
-            name="courseName"
-            rules={[{ required: true, message: 'Please input course name!' }]}
+            label="Lesson name"
+            name="lessonName"
+            rules={[{ required: true, message: 'Please input lesson name!' }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Short course description"
-            name="shortCourseDescription"
-            rules={[{ required: true, message: 'Please input short course description!' }]}
+            label="Lesson description"
+            name="lessonDescription"
+            rules={[{ required: true, message: 'Please input short lesson description!' }]}
           >
             <Input />
           </Form.Item>
-
-          <Form.Item
-            label="Detail course description"
-            name="detailCourseDescription"
-            rules={[{ required: true, message: 'Please input detail coure description!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="What will learn"
-            name="whatWillLearn"
-            rules={[{ required: true, message: 'Please input what will learn!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Requirements"
-            name="requirements"
-            rules={[{ required: true, message: 'Please input requirements!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Fee"
-            name="fee"
-            rules={[{ required: true, message: 'Please input fee!' }]}
-          >
-            <Input />
-          </Form.Item>
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit" style={{ borderRadius: 6 }}>
               Add

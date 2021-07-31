@@ -53,23 +53,26 @@ function * getMe () {
 function * register () {
   yield takeEvery(userType.REGISTER, function * ({ payload }) {
     try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
       const res = yield call(httpUser.register, payload) // api cal
-      const { message } = res
-      if (!message) {
+      const { data, message } = res
+      if (data !== null) {
         yield put({ type: userType.REGISTER_SUCCESS, payload: res })
-
         Modal.info({
           title: 'Successfull',
           content: 'Register successful! Please check email to login .'
         })
       } else {
-        const { message } = res.data
         Modal.error({
           title: 'Error',
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
@@ -85,6 +88,7 @@ function * signOut () {
 function * getAuthUsers () {
   yield takeEvery(userType.GET_AUTT_USERS, function * ({ page, limit, role }) {
     try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
       const res = yield call(httpUser.getAuthUsers, { page, limit, role })
       const { data, message } = res
       if (message === 'Success!') {
@@ -95,14 +99,19 @@ function * getAuthUsers () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
   })
 }
 
 function * deleteAuthUser () {
-  yield takeEvery(userType.DELETE_AUTH_USERS, function * ({ payload }) {
+  yield takeEvery(userType.DELETE_AUTH_USERS, function * ({ userId }) {
     try {
-      const res = yield call(httpUser.deleteAuthUser, payload) // api cal
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.deleteAuthUser, userId) // api cal
       const { data, message } = res
       if (data !== null) {
         yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res })
@@ -116,6 +125,10 @@ function * deleteAuthUser () {
           content: `${message}!`
         })
       }
-    } catch (e) { console.log(e) }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
   })
 }

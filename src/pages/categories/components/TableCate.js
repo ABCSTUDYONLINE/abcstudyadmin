@@ -5,6 +5,7 @@ import { Table, Form, Input, Button, Select, Modal } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories, deleteCategories, putCategories } from '../../../redux/category/categoryAction'
+import { LoadingDialog } from '../../../components/LoadingDialog'
 
 const { Option } = Select
 
@@ -14,6 +15,7 @@ export default function TableCate (props) {
   const dataCategory = useSelector(state => state.category.categories)
   const totalCategory = useSelector(state => state.category.total)
   const isChanged = useSelector(state => state.category.isChanged)
+  const isLoading = useSelector(state => state.category.loading)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
@@ -152,6 +154,7 @@ export default function TableCate (props) {
           </Form.Item>
         </Form>
       </Modal>
+      <LoadingDialog isLoading={isLoading === 1} />
     </div>
   )
 }

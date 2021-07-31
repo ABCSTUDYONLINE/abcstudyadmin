@@ -1,8 +1,8 @@
-import topicsType from './topicsType'
+import lessonsType from './lessonsType'
 
 const initialState = {
   loading: 0,
-  topics: [],
+  lessons: [],
   total: 0,
   isChanged: 1
 }
@@ -13,27 +13,27 @@ export default function topicsReducer (state = initialState, action) {
   const changed = new Date().getTime()
 
   switch (type) {
-    case topicsType.POST_TOPIC_SUCCESS:
+    case lessonsType.POST_LESSON_SUCCESS:
       newState = Object.assign({}, state, { isChanged: changed })
       break
 
-    case topicsType.PUT_TOPIC_SUCCESS:
+    case lessonsType.PUT_LESSON_SUCCESS:
       newState = Object.assign({}, state, { isChanged: changed })
       break
 
-    case topicsType.GET_TOPICS_SUCCESS:
-      newState = Object.assign({}, state, { topics: payload.data, total: payload.total })
+    case lessonsType.GET_LESSONS_SUCCESS:
+      newState = Object.assign({}, state, { lessons: payload.data, total: payload.total })
       break
 
-    case topicsType.DELETE_TOPIC_SUCCESS:
+    case lessonsType.DELETE_LESSON_SUCCESS:
       newState = Object.assign({}, state, { isChanged: changed })
       break
 
-    case topicsType.LOADING_SHOW:
+    case lessonsType.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: 1 })
       break
 
-    case topicsType.LOADING_HIDE:
+    case lessonsType.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: 0 })
       break
 

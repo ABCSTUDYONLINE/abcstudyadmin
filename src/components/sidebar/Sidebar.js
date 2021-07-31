@@ -7,17 +7,23 @@ import listMenuAdmin from './ListMenuAdminItem'
 import listMenuTeacher from './ListMenuTeacherItem'
 import useStyles from './styles'
 import MenuItem from './MenuItem'
+import { Card } from 'antd'
 
 import Logo from '../../logo.svg'
+
+const { Meta } = Card
 function Sidebar () {
   const classes = useStyles()
-
   const [role, setRole] = useState('admin')
+  const [image, setImage] = useState(null)
+  const [profile, setProfile] = useState('')
 
   useEffect(() => {
     const profileExist = JSON.parse(localStorage.getItem('profile'))
     if (profileExist) {
       setRole(profileExist.role)
+      setImage(profileExist.avatarLink !== null ? profileExist.avatarLink : Logo)
+      setProfile(profileExist)
     }
   }, [])
 
@@ -30,9 +36,12 @@ function Sidebar () {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar}>
-          <img src={Logo} alt="ABClogo" className={classes.imgToolbar}/>
-        </div>
+        <Card
+          hoverable
+          cover={<img src={image} style={{ height: 100 }} alt="ABClogo"/>}
+        >
+          <Meta title={`${profile.firstName} ${profile.lastName}`} description={profile.email} />
+        </Card>
         <Divider/>
         <List className={classes.listItem}>
           { (role === 'admin' ? listMenuAdmin : listMenuTeacher).map(item => (
