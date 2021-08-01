@@ -34,6 +34,7 @@ export default function TableSrc (props) {
   const [courseIdUpdate, setCourseIdUpdate] = useState()
   const [isImage, setImage] = useState(false)
   const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
+  const firstUpdateProfile = React.useRef(true)
 
   useEffect(() => {
     const localProfile = JSON.parse(localStorage.getItem('profile'))
@@ -50,8 +51,12 @@ export default function TableSrc (props) {
   }, [])
 
   useEffect(() => {
+    if (firstUpdateProfile.current) {
+      firstUpdateProfile.current = false
+      return
+    }
     getDataCourses()
-  }, [page, limit, isChanged])
+  }, [role, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
