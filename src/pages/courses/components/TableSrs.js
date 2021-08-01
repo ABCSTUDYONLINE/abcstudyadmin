@@ -1,10 +1,11 @@
+/* eslint-disable no-sequences */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react'
 import { Table, Image, Button, Form, Select, Input, Modal, Upload } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic } from '../../../redux/courses/coursesAction'
+import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
@@ -23,14 +24,22 @@ export default function TableSrc (props) {
   const isChanged = useSelector(state => state.courses.isChanged)
   const dataCategory = useSelector(state => state.category.categories)
   const isLoading = useSelector(state => state.courses.loading)
+  const profileChange = useSelector(state => state.user.profile)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
   const [limit] = useState(5)
-  const [role] = useState(JSON.parse(localStorage.getItem('profile')).role === 'teacher' ? 1 : 0)
+  const [role, setRole] = useState(0)
   const [visible, setVisible] = useState(false)
   const [courseIdUpdate, setCourseIdUpdate] = useState()
   const [isImage, setImage] = useState(false)
+  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
+
+  useEffect(() => {
+    const localProfile = JSON.parse(localStorage.getItem('profile'))
+    setProfile(localProfile)
+    setRole(localProfile.role === 'teacher' ? 1 : 0)
+  }, [profileChange])
 
   const getDataCourses = () => {
     dispatch(getCourses(role, page, limit))
@@ -56,6 +65,10 @@ export default function TableSrc (props) {
     dispatch(gotoTopic(courseId))
   }
 
+  const toPublic = (courseId) => {
+    dispatch(publicCourse({ courseId: courseId }))
+  }
+
   const onEdit = (idCategory, course) => {
     setCourseIdUpdate(idCategory)
     form.setFieldsValue({
@@ -75,7 +88,6 @@ export default function TableSrc (props) {
     const course = dataCourse.find((element) => {
       return element.courseImageLink === link
     })
-    console.log(course)
     setCourseIdUpdate(course.id)
     setImage(true)
     setVisible(true)
@@ -201,6 +213,7 @@ export default function TableSrc (props) {
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
           {role === 1 ? <a style={{ cursor: 'pointer', color: '#314CDB', marginRight: 20 }} onClick={() => onEdit(id, course)}>edit</a> : null}
           {role === 1 ? <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={() => toTopic(id)}>topics</a> : null}
+          {role === 1 ? <a style={course.status !== 'doing' ? { pointerEvents: 'none', opacity: '0.4', color: '#db9514', marginRight: 20 } : { cursor: 'pointer', color: '#db9514', marginRight: 20 }} onClick={() => toPublic(id)}>publish</a> : null}
         </div>
     }
   ]

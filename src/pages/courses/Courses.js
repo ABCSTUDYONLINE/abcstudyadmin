@@ -23,8 +23,16 @@ const useStyles = makeStyles(theme => ({
 function Courses () {
   const classes = useStyles()
   const goto = useSelector(state => state.courses.goto)
+  const profileChange = useSelector(state => state.user.profile)
+  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
+
+  useEffect(() => {
+    const localProfile = JSON.parse(localStorage.getItem('profile'))
+    setProfile(localProfile)
+  }, [profileChange])
+
   const Greeting = (props) => {
-    if (JSON.parse(localStorage.getItem('profile')).role === 'admin') {
+    if (profile.role === 'admin') {
       return (
         <div>
           <PopupSrs />
@@ -59,7 +67,7 @@ function Courses () {
   }
 
   const title = () => {
-    if (JSON.parse(localStorage.getItem('profile')).role === 'admin') {
+    if (profile.role === 'admin') {
       return 'Courses management'
     } else {
       if (goto === 0) {

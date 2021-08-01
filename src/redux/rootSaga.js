@@ -4,6 +4,7 @@ import categorySaga from './category/categorySaga'
 import coursesSaga from './courses/coursesSaga'
 import topicsSaga from './topics/topicsSaga'
 import lessonsSaga from './lessons/lessonsSaga'
+import layoutSaga from './layout/layoutSaga'
 // single entry point to start all Sagas at once
 export default function * rootSaga () {
   yield all([
@@ -11,6 +12,7 @@ export default function * rootSaga () {
     categorySaga(),
     coursesSaga(),
     topicsSaga(),
-    lessonsSaga()
+    lessonsSaga(),
+    layoutSaga()
   ])
 }

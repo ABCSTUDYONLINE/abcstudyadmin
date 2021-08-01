@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import camelcaseKeys from 'camelcase-keys'
 import store from '../redux/store'
@@ -48,41 +49,41 @@ const checkError = instance => {
   )
 }
 
-function showSpinner (instance) {
-  instance.interceptors.request.use(
-    request => {
-      !request._skipSpinner && store.dispatch(showLoading())
-      return request
-    },
-    error => {
-      store.dispatch(showLoading())
-      return Promise.reject(error)
-    }
-  )
-}
+// function showSpinner (instance) {
+//   instance.interceptors.request.use(
+//     request => {
+//       !request._skipSpinner && store.dispatch(showLoading())
+//       return request
+//     },
+//     error => {
+//       store.dispatch(showLoading())
+//       return Promise.reject(error)
+//     }
+//   )
+// }
 
-function hideSpinner (instance) {
-  instance.interceptors.response.use(
-    response => {
-      setTimeout(() => {
-        store.dispatch(hideLoading())
-      }, 400)
-      return response
-    },
-    error => {
-      setTimeout(() => {
-        store.dispatch(hideLoading())
-      }, 400)
-      return Promise.reject(error)
-    }
-  )
-}
+// function hideSpinner (instance) {
+//   instance.interceptors.response.use(
+//     response => {
+//       setTimeout(() => {
+//         store.dispatch(hideLoading())
+//       }, 400)
+//       return response
+//     },
+//     error => {
+//       setTimeout(() => {
+//         store.dispatch(hideLoading())
+//       }, 400)
+//       return Promise.reject(error)
+//     }
+//   )
+// }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   setup,
   checkToken,
-  checkError,
-  showSpinner,
-  hideSpinner
+  checkError
+  // showSpinner,
+  // hideSpinner
 }

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     display: ({ isLoading }) => isLoading === true ? 'flex' : 'none', /* Show or Hidden by default */
     position: 'fixed', /* Stay in place */
     alignItems: 'center',
-    index: 999, /* Sit on top */
+    zIndex: 999, /* Sit on top */
     left: 0,
     top: 0,
     justifyContent: 'center',

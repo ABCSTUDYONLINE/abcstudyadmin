@@ -13,6 +13,24 @@ const register = async (params) => {
   return res.data
 }
 
+const updateUser = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.patch('/auth/users', params)
+  return res.data
+}
+
+const updateAvatar = async (params) => {
+  localStorage.setItem('contentType', 'multipart/form-data')
+  const res = await API.put('/auth/avatar', params)
+  return res.data
+}
+
+const changePassword = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.patch('/auth/password', params)
+  return res.data
+}
+
 const getAuthUsers = async (params) => {
   localStorage.setItem('contentType', 'application/json')
   const { role, page, limit } = params
@@ -45,5 +63,8 @@ export default {
   getMe,
   getAuthUsers,
   postAuthOtpSend,
-  deleteAuthUser
+  deleteAuthUser,
+  updateUser,
+  updateAvatar,
+  changePassword
 }

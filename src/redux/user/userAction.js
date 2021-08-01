@@ -45,3 +45,38 @@ export function deleteAuthUser (userId) {
     userId: userId
   }
 }
+
+export function updateUser (payload) {
+  return {
+    type: userType.UPDATE,
+    payload
+  }
+}
+
+export function updateAvatar (payload) {
+  return {
+    type: userType.UPDATE_AVATAR,
+    payload
+  }
+}
+
+export function changePassword (history, payload) {
+  return {
+    type: userType.CHANGE_PASSWORD,
+    history,
+    payload
+  }
+}
+
+export function showProfile (isAvatar) {
+  return {
+    type: userType.SHOW_PROFILE,
+    isAvatar
+  }
+}
+
+export function hideProfile () {
+  return {
+    type: userType.HIDE_PROFILE
+  }
+}

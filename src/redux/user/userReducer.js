@@ -9,7 +9,10 @@ const initialState = {
   userId: '',
   users: [],
   total: 0,
-  isChanged: 1
+  isChanged: 1,
+  profile: null,
+  showProfile: 0,
+  isAvatar: false
 }
 
 export default function userReducer (state = initialState, action) {
@@ -35,6 +38,14 @@ export default function userReducer (state = initialState, action) {
       newState = Object.assign({}, state, {})
       break
 
+    case userType.UPDATE_SUCCESS:
+      newState = Object.assign({}, state, { profile: payload })
+      break
+
+    case userType.UPDATE_AVATAR_SUCCESS:
+      newState = Object.assign({}, state, { profile: payload })
+      break
+
     case userType.SIGN_OUT_SUCCESS:
       localStorage.removeItem('token')
       localStorage.removeItem('profile')
@@ -55,6 +66,15 @@ export default function userReducer (state = initialState, action) {
     case userType.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: 0 })
       break
+
+    case userType.SHOW_PROFILE_SUCCESS:
+      newState = Object.assign({}, state, { showProfile: 1, isAvatar: payload.isAvatar })
+      break
+
+    case userType.HIDE_PROFILE_SUCCESS:
+      newState = Object.assign({}, state, { showProfile: 0 })
+      break
+
     default:
       newState = state
   }

@@ -13,7 +13,15 @@ export default function PopupCate () {
   const dispatch = useDispatch()
   const [visible, setVisible] = React.useState(false)
   const dataCategory = useSelector(state => state.category.categories)
-  const [role] = useState(JSON.parse(localStorage.getItem('profile')).role === 'teacher' ? 1 : 0)
+  const profileChange = useSelector(state => state.user.profile)
+  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
+  const [role, setRole] = useState(0)
+
+  useEffect(() => {
+    const localProfile = JSON.parse(localStorage.getItem('profile'))
+    setProfile(localProfile)
+    setRole(localProfile.role === 'teacher' ? 1 : 0)
+  }, [profileChange])
 
   useEffect(() => {
     dispatch(getCategories(1, 100))

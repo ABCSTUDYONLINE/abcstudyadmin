@@ -14,7 +14,7 @@ const Api = axios.create({
 interceptors.setup(Api)
 interceptors.checkToken(Api)
 interceptors.checkError(Api)
-interceptors.showSpinner(Api)
-interceptors.hideSpinner(Api)
+// interceptors.showSpinner(Api)
+// interceptors.hideSpinner(Api)
 
 export default Api

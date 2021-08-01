@@ -14,7 +14,8 @@ export default function * userSaga () {
     deleteCourses(),
     gobackTopic(),
     gotoLesson(),
-    gobackCourse()
+    gobackCourse(),
+    publicCourse()
   ])
 }
 
@@ -132,6 +133,32 @@ function * deleteCourses () {
           content: 'You have deleted courses successfully'
         })
         yield put({ type: coursesType.DELETE_COURSES_SUCCESS, payload: {} })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
+function * publicCourse () {
+  yield takeEvery(coursesType.TO_PUBLIC, function * ({ payload }) {
+    try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpCourses.publicCourse, payload)
+      const { data, message } = res
+      if (data !== null) {
+        Modal.success({
+          title: 'Success',
+          content: 'You have public this course successfully'
+        })
+        yield put({ type: coursesType.TO_PUBLIC_SUCCESS, payload: {} })
       } else {
         Modal.error({
           title: 'Error',

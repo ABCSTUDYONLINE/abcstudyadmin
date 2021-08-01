@@ -23,6 +23,9 @@ export default {
   GO_TO_TOPIC: _prefix + 'GO_TO_TOPIC',
   GO_TO_TOPIC_SUCCESS: _prefix + 'GO_TO_TOPIC_SUCCESS',
 
+  TO_PUBLIC: _prefix + 'TO_PUBLIC',
+  TO_PUBLIC_SUCCESS: _prefix + 'TO_PUBLIC_SUCCESS',
+
   GO_BACK_TOPIC: _prefix + 'GO_BACK_TOPIC',
   GO_BACK_TOPIC_SUCCESS: _prefix + 'GO_BACK_TOPIC_SUCCESS',
 

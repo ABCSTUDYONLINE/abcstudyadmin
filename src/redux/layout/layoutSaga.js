@@ -1,7 +1,7 @@
 import layoutType from './layoutType'
 import { all, takeEvery, put } from 'redux-saga/effects'
 
-export default function * todoSaga () {
+export default function * layoutSaga () {
   yield all([
     showLoading(),
     hideLoading(),

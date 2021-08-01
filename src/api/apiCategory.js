@@ -9,7 +9,7 @@ const postCategories = async (params) => {
 
 const putCategories = async (params) => {
   localStorage.setItem('contentType', 'application/json')
-  const res = await API.put('/categories', params)
+  const res = await API('application/json').put('/categories', params)
   return res.data
 }
 

@@ -65,3 +65,10 @@ export function deleteCourses (courseId) {
     courseId: courseId
   }
 }
+
+export function publicCourse (payload) {
+  return {
+    type: coursesType.TO_PUBLIC,
+    payload: payload
+  }
+}

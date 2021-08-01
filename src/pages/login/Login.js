@@ -51,20 +51,7 @@ const Login = (props) => {
   useEffect(() => {
     const tokenExist = localStorage.getItem('token')
     if (tokenExist) {
-      const profileExist = JSON.parse(localStorage.getItem('profile'))
-      if (profileExist) {
-        switch (profileExist.role) {
-          case 'admin':
-            history.push('/dashboard/admin/categories')
-            break
-          case 'teacher':
-            history.push('/dashboard/teacher/courses')
-            break
-          default:
-            message = 'Student cannot accesss!'
-            break
-        }
-      }
+      dispatch(getMe({ history }))
     }
   }, [])
 
@@ -93,23 +80,20 @@ const Login = (props) => {
       firstUpdateProfile.current = false
       return
     }
-    const profileExist = profile
-    if (profileExist) {
-      switch (profileExist.role) {
-        case 'admin':
-          history.push('/dashboard/admin/categories')
-          break
-        case 'teacher':
-          history.push('/dashboard/teacher/courses')
-          break
-        default:
-          localStorage.removeItem('token')
-          localStorage.removeItem('profile')
-          message = 'Student cannot accesss!'
-          setError(true)
-          setIsLoading(false)
-          break
-      }
+    switch (profile.role) {
+      case 'admin':
+        history.push('/dashboard/admin/categories')
+        break
+      case 'teacher':
+        history.push('/dashboard/teacher/courses')
+        break
+      default:
+        localStorage.removeItem('token')
+        localStorage.removeItem('profile')
+        message = 'Student cannot accesss!'
+        setError(true)
+        setIsLoading(false)
+        break
     }
   }, [profile])
 
