@@ -50,6 +50,12 @@ const postAuthOtpSend = async (params) => {
   return res.data
 }
 
+const postAuthOtpConfirm = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.post('/auth/otp/confirm', params)
+  return res.data
+}
+
 const deleteAuthUser = async (userId) => {
   localStorage.setItem('contentType', 'application/json')
   const res = await API.delete(`/auth/users?userId=${userId}`)
@@ -66,5 +72,6 @@ export default {
   deleteAuthUser,
   updateUser,
   updateAvatar,
-  changePassword
+  changePassword,
+  postAuthOtpConfirm
 }

@@ -53,6 +53,20 @@ export function updateUser (payload) {
   }
 }
 
+export function postAuthOtpSend (payload) {
+  return {
+    type: userType.OTP_SEND,
+    payload
+  }
+}
+
+export function postAuthOtpConfirm (payload) {
+  return {
+    type: userType.OTP_CONFIRM,
+    payload
+  }
+}
+
 export function updateAvatar (payload) {
   return {
     type: userType.UPDATE_AVATAR,

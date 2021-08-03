@@ -17,7 +17,9 @@ export default function * userSaga () {
     showProfile(),
     hideProfile(),
     updateAvatar(),
-    changePassword()
+    changePassword(),
+    postAuthOtpSend(),
+    postAuthOtpConfirm()
   ])
 }
 
@@ -26,7 +28,7 @@ function * signIn () {
     try {
       yield put({ type: userType.SIGN_IN_ERROR, payload: { message: '' } })
       const res = yield call(httpUser.login, payload) // api call
-      const { data } = res
+      const { data, message } = res
       if (data !== null) {
         yield put({ type: userType.SIGN_IN_SUCCESS, payload: res })
       } else {
@@ -93,6 +95,52 @@ function * updateUser () {
           title: 'Successfull',
           content: 'Update successful!'
         })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
+function * postAuthOtpSend () {
+  yield takeEvery(userType.OTP_SEND, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.postAuthOtpSend, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        localStorage.setItem('email', JSON.stringify(payload.email))
+        yield put({ type: userType.OTP_SEND_SUCCESS, payload: data })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
+function * postAuthOtpConfirm () {
+  yield takeEvery(userType.OTP_CONFIRM, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.postAuthOtpConfirm, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        localStorage.removeItem('email')
+        yield put({ type: userType.OTP_CONFIRM_SUCCESS, payload: data })
       } else {
         Modal.error({
           title: 'Error',

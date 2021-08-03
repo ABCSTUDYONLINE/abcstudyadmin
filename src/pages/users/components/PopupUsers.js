@@ -19,6 +19,7 @@ export default function PopupUsers (props) {
   const [isRead, setRead] = React.useState(true)
   const isChanged = useSelector(state => state.user.isChanged)
   const isLoading = useSelector(state => state.user.loading)
+  const [role, setRole] = React.useState('admin')
 
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem('profile'))
@@ -28,11 +29,13 @@ export default function PopupUsers (props) {
       birthDay: moment(profile.birthDay),
       email: profile.email,
       phoneNumber: profile.phoneNumber,
-      address: profile.address
+      address: profile.address,
+      shortBio: profile.shortBio
     })
     setRead(true)
     setVisible(props.visible)
     setAvatar(props.isAvatar)
+    setRole(profile.role)
   }, [props.visible])
 
   const handleCancel = () => {
@@ -46,6 +49,9 @@ export default function PopupUsers (props) {
       formData.append('file', values.file[0].originFileObj)
       dispatch(updateAvatar(formData))
     } else {
+      if (values.shortBio === undefined) {
+        values.shortBio = ''
+      }
       values.birthDay = moment(values.birthDay._d).format('YYYY/MM/DD')
       dispatch(updateUser(values))
     }
@@ -170,6 +176,17 @@ export default function PopupUsers (props) {
           >
             <Input readOnly={isRead}/>
           </Form.Item>
+          {role === 'teacher'
+            ? (<>
+            <Form.Item
+              label="Short Bio"
+              name="shortBio"
+              rules={[{ required: true, message: 'Please input your bio!' }]}
+            >
+              <Input readOnly={isRead}/>
+            </Form.Item>
+            </>)
+            : (<></>)}
           </>}
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

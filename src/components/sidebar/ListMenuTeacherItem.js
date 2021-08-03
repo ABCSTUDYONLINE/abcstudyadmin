@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // import Categories from '../../pages/categories/Categories'
 import Courses from '../../pages/courses/Courses'
+import Promotions from '../../pages/promotions/Promotions'
 // import Users from '../../pages/users/Users'
 
 import {
@@ -16,6 +17,12 @@ const listMenuTeacher = [
     icon: <LibraryBooksIcon />,
     exact: true,
     component: Courses
+  },
+  {
+    name: 'Promotions',
+    path: '/dashboard/teacher/promotions',
+    icon: <LibraryBooksIcon />,
+    component: Promotions
   }
 ]
 export default listMenuTeacher

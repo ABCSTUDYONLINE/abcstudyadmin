@@ -12,7 +12,9 @@ const initialState = {
   isChanged: 1,
   profile: null,
   showProfile: 0,
-  isAvatar: false
+  isAvatar: false,
+  sendSuccess: false,
+  confirmSuccess: false
 }
 
 export default function userReducer (state = initialState, action) {
@@ -40,6 +42,14 @@ export default function userReducer (state = initialState, action) {
 
     case userType.UPDATE_SUCCESS:
       newState = Object.assign({}, state, { profile: payload })
+      break
+
+    case userType.OTP_SEND_SUCCESS:
+      newState = Object.assign({}, state, { sendSuccess: !state.sendSuccess })
+      break
+
+    case userType.OTP_CONFIRM_SUCCESS:
+      newState = Object.assign({}, state, { confirmSuccess: !state.confirmSuccess })
       break
 
     case userType.UPDATE_AVATAR_SUCCESS:

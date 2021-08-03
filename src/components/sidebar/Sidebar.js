@@ -10,7 +10,7 @@ import MenuItem from './MenuItem'
 import { Card } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import Logo from '../../logo.svg'
-import { showProfile } from '../../redux/user/userAction'
+import { showProfile, signOut } from '../../redux/user/userAction'
 
 const { Meta } = Card
 function Sidebar () {
@@ -43,7 +43,7 @@ function Sidebar () {
           hoverable
           cover={<img src={image} style={{ height: 100 }} alt="ABClogo"/>}
         >
-          <Meta title={`${profile.firstName} ${profile.lastName}`} description={profile.email} />
+          <Meta title={profile === null ? dispatch(signOut(history)) : `${profile.firstName} ${profile.lastName}`} description={profile.email} />
         </Card>
         <Divider/>
         <List className={classes.listItem}>

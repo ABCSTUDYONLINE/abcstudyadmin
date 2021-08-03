@@ -15,6 +15,12 @@ export default {
   UPDATE: _prefix + 'UPDATE',
   UPDATE_SUCCESS: _prefix + 'UPDATE_SUCCESS',
 
+  OTP_SEND: _prefix + 'OTP_SEND',
+  OTP_SEND_SUCCESS: _prefix + 'OTP_SEND_SUCCESS',
+
+  OTP_CONFIRM: _prefix + 'OTP_CONFIRM',
+  OTP_CONFIRM_SUCCESS: _prefix + 'OTP_CONFIRM_SUCCESS',
+
   UPDATE_AVATAR: _prefix + 'UPDATE_AVATAR',
   UPDATE_AVATAR_SUCCESS: _prefix + 'UPDATE_AVATAR_SUCCESS',
 

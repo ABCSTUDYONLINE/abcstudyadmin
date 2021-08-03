@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, CircularProgress, Fade, Grid, TextField, Typography } from '@material-ui/core'
-import { useDispatch, connect } from 'react-redux'
-
+import { useDispatch, connect, useSelector } from 'react-redux'
+import PopupConfirm from './PopupConfirm'
 import { signIn, getMe } from '../../redux/user/userAction'
+import { LoadingDialog } from '../../components/LoadingDialog'
 
 // styles
 import useStyles from './styles'
@@ -15,6 +16,10 @@ import logo from './logo.svg'
 
 const Login = (props) => {
   const dispatch = useDispatch()
+
+  const sendSuccess = useSelector(state => state.user.sendSuccess)
+  const confirmSuccess = useSelector(state => state.user.confirmSuccess)
+  const userLoading = useSelector(state => state.user.loading)
 
   const history = useHistory()
   let message = props.message
@@ -29,6 +34,11 @@ const Login = (props) => {
   const firstUpdateMessage = useRef(true)
   const firstUpdateToken = useRef(true)
   const firstUpdateProfile = useRef(true)
+  const firstUpdateSend = useRef(true)
+  const firstUpdateConfirm = useRef(true)
+  const [isConfirm, setConfirm] = useState(null)
+  const [isShow, showConfirm] = useState(false)
+
   const login = () => {
     setIsLoading(true)
     setError(false)
@@ -60,11 +70,33 @@ const Login = (props) => {
       firstUpdateMessage.current = false
       return
     }
+    console.log(message)
+    if (message === 'Please confirm user account! user unconfirm!') {
+      showConfirm(!isShow)
+      setConfirm(false)
+    }
     if (message !== '') {
       setError(true)
       setIsLoading(false)
     }
   }, [message])
+
+  useEffect(() => {
+    if (firstUpdateSend.current) {
+      firstUpdateSend.current = false
+      return
+    }
+    showConfirm(!isShow)
+    setConfirm(true)
+  }, [sendSuccess])
+
+  useEffect(() => {
+    if (firstUpdateConfirm.current) {
+      firstUpdateConfirm.current = false
+      return
+    }
+    login()
+  }, [confirmSuccess])
 
   useEffect(() => {
     if (firstUpdateToken.current) {
@@ -99,6 +131,7 @@ const Login = (props) => {
 
   return (
         <Grid container className={classes.container}>
+            <PopupConfirm isConfirm={isConfirm} isShow={isShow}/>
             <div className={classes.logotypeContainer}>
                 <img src={logo} alt="logo" className={classes.logotypeImage} />
                 <Typography className={classes.logotypeText}>ABCStudy Admin</Typography>
@@ -163,8 +196,8 @@ const Login = (props) => {
                     </React.Fragment>
                 </div>
             </div>
+            <LoadingDialog isLoading={userLoading === 1} />
         </Grid>
-
   )
 }
 
