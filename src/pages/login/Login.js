@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { Button, CircularProgress, Fade, Grid, TextField, Typography } from '@material-ui/core'
 import { useDispatch, connect, useSelector } from 'react-redux'
 import PopupConfirm from './PopupConfirm'
+import PopupForgetPass from './PopupForgetPass'
 import { signIn, getMe } from '../../redux/user/userAction'
 import { LoadingDialog } from '../../components/LoadingDialog'
 
@@ -20,6 +21,7 @@ const Login = (props) => {
   const sendSuccess = useSelector(state => state.user.sendSuccess)
   const confirmSuccess = useSelector(state => state.user.confirmSuccess)
   const userLoading = useSelector(state => state.user.loading)
+  const forgetPassValue = useSelector(state => state.user.forgetPassValue)
 
   const history = useHistory()
   let message = props.message
@@ -36,8 +38,11 @@ const Login = (props) => {
   const firstUpdateProfile = useRef(true)
   const firstUpdateSend = useRef(true)
   const firstUpdateConfirm = useRef(true)
+  const firstUpdatePass = useRef(true)
   const [isConfirm, setConfirm] = useState(null)
   const [isShow, showConfirm] = useState(false)
+  const [isShowDialog, showShowDialog] = useState(false)
+  const [valueForgetPass, setValueForgetPass] = useState(0)
 
   const login = () => {
     setIsLoading(true)
@@ -129,8 +134,23 @@ const Login = (props) => {
     }
   }, [profile])
 
+  useEffect(() => {
+    if (firstUpdatePass.current === true) {
+      firstUpdatePass.current = false
+      return
+    }
+    setValueForgetPass(forgetPassValue)
+    showShowDialog(!isShowDialog)
+  }, [forgetPassValue])
+
+  const forgetPass = () => {
+    setValueForgetPass(0)
+    showShowDialog(!isShowDialog)
+  }
+
   return (
         <Grid container className={classes.container}>
+            <PopupForgetPass forgetPassValue={valueForgetPass} isShow={isShowDialog}/>
             <PopupConfirm isConfirm={isConfirm} isShow={isShow}/>
             <div className={classes.logotypeContainer}>
                 <img src={logo} alt="logo" className={classes.logotypeImage} />
@@ -182,15 +202,26 @@ const Login = (props) => {
                               ? (<CircularProgress size={26} className={classes.loginLoader} />
                                 )
                               : (
+                                <>
                                 <Button
-                                    disabled={userName.length === 0 || password.length === 0}
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                    onClick={() => login()}
+                                  disabled={userName.length === 0 || password.length === 0}
+                                  variant="contained"
+                                  color="primary"
+                                  size="large"
+                                  onClick={() => login()}
                                 >
-                                    Login
+                                  Login
                                 </Button>
+                                <Button
+                                  style={{ marginLeft: 10 }}
+                                  variant="contained"
+                                  color="primary"
+                                  size="large"
+                                  onClick={() => forgetPass()}
+                                >
+                                  Forget Pass
+                                </Button>
+                                </>
                                 )}
                         </div>
                     </React.Fragment>

@@ -1,0 +1,28 @@
+# sudo: required
+
+# language: node_js
+# node_js:
+#   - 12
+
+# branches:
+#   only:
+#   - deployment
+
+# script:
+#   - npm test
+#   - npm run build
+
+# notifications:
+#   email:
+#     recipients:
+#       - nguyenhoanganh806@gmail.com
+#       - khongthenho304@gmail.com
+#     on_success: always
+#     on_failure: always
+
+# deploy:
+#   provider: heroku
+#   api_key: 941f69e1-64db-4f00-9cbe-884ef0193d8c
+#   app: 
+#   on:
+#     branch: deployment

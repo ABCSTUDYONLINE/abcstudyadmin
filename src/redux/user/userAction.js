@@ -82,6 +82,27 @@ export function changePassword (history, payload) {
   }
 }
 
+export function sendForgetPassword (payload) {
+  return {
+    type: userType.OTP_SEND_FORGET_PASS,
+    payload
+  }
+}
+
+export function confirmForgetPassword (payload) {
+  return {
+    type: userType.OTP_CONFIRM_FORGET_PASS,
+    payload
+  }
+}
+
+export function forgetPassword (payload) {
+  return {
+    type: userType.FORGET_PASS,
+    payload
+  }
+}
+
 export function showProfile (isAvatar) {
   return {
     type: userType.SHOW_PROFILE,

@@ -4,6 +4,7 @@ import { takeEvery, all, put, call } from 'redux-saga/effects'
 import userType from './userType'
 import httpUser from '../../api/apiUser'
 import { Modal } from 'antd'
+import { confirmForgetPassword, forgetPassword, sendForgetPassword } from './userAction'
 
 export default function * userSaga () {
   yield all([
@@ -19,7 +20,10 @@ export default function * userSaga () {
     updateAvatar(),
     changePassword(),
     postAuthOtpSend(),
-    postAuthOtpConfirm()
+    postAuthOtpConfirm(),
+    postOtpSendForgetPass(),
+    postOtpConfirmForgetPass(),
+    postForgetPass()
   ])
 }
 
@@ -64,7 +68,7 @@ function * register () {
       const { data, message } = res
       if (data !== null) {
         yield put({ type: userType.REGISTER_SUCCESS, payload: res })
-        Modal.info({
+        Modal.success({
           title: 'Successfull',
           content: 'Register successful!'
         })
@@ -91,7 +95,7 @@ function * updateUser () {
       if (data !== null) {
         localStorage.setItem('profile', JSON.stringify(data))
         yield put({ type: userType.UPDATE_SUCCESS, payload: data })
-        Modal.info({
+        Modal.success({
           title: 'Successfull',
           content: 'Update successful!'
         })
@@ -155,6 +159,78 @@ function * postAuthOtpConfirm () {
   })
 }
 
+function * postOtpSendForgetPass () {
+  yield takeEvery(userType.OTP_SEND_FORGET_PASS, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.sendForgetPassword, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        localStorage.setItem('username', JSON.stringify(payload.username))
+        yield put({ type: userType.OTP_SEND_FORGET_PASS_SUCCESS, payload: data })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
+function * postOtpConfirmForgetPass () {
+  yield takeEvery(userType.OTP_CONFIRM_FORGET_PASS, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.confirmForgetPassword, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        yield put({ type: userType.OTP_CONFIRM_FORGET_PASS_SUCCESS, payload: data })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
+function * postForgetPass () {
+  yield takeEvery(userType.FORGET_PASS, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.forgetPassword, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        localStorage.removeItem('username')
+        yield put({ type: userType.FORGET_PASS_SUCCESS, payload: data })
+        Modal.success({
+          title: 'Successfull',
+          content: 'Update successful!'
+        })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
+  })
+}
+
 function * signOut () {
   yield takeEvery(userType.SIGN_OUT, function * ({ history }) {
     try {
@@ -173,7 +249,7 @@ function * updateAvatar () {
       if (data !== null) {
         localStorage.setItem('profile', JSON.stringify(data))
         yield put({ type: userType.UPDATE_AVATAR_SUCCESS, payload: data })
-        Modal.info({
+        Modal.success({
           title: 'Successfull',
           content: 'Update successful!'
         })
@@ -226,7 +302,7 @@ function * getAuthUsers () {
       yield put({ type: userType.LOADING_SHOW, payload: {} })
       const res = yield call(httpUser.getAuthUsers, { page, limit, role })
       const { data, message } = res
-      if (message === 'Success!') {
+      if (data !== null) {
         yield put({ type: userType.GET_AUTT_USERS_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
       } else {
         Modal.error({
@@ -250,7 +326,7 @@ function * deleteAuthUser () {
       const { data, message } = res
       if (data !== null) {
         yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res })
-        Modal.info({
+        Modal.success({
           title: 'Successfull',
           content: 'Delete user successfull ! .'
         })

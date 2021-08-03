@@ -59,6 +59,7 @@ export default function PopupConfirm (props) {
       cleanUp()
       const email = JSON.parse(localStorage.getItem('email'))
       values.email = email
+      values.code = +values.code
       dispatch(postAuthOtpConfirm(values))
     } else {
       dispatch(postAuthOtpSend(values))

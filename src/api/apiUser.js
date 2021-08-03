@@ -31,6 +31,24 @@ const changePassword = async (params) => {
   return res.data
 }
 
+const sendForgetPassword = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.post('/auth/otp/forget/send', params)
+  return res.data
+}
+
+const confirmForgetPassword = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.post('/auth/otp/forget/confirm', params)
+  return res.data
+}
+
+const forgetPassword = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.patch('/auth/forget/password', params)
+  return res.data
+}
+
 const getAuthUsers = async (params) => {
   localStorage.setItem('contentType', 'application/json')
   const { role, page, limit } = params
@@ -73,5 +91,8 @@ export default {
   updateUser,
   updateAvatar,
   changePassword,
-  postAuthOtpConfirm
+  postAuthOtpConfirm,
+  sendForgetPassword,
+  confirmForgetPassword,
+  forgetPassword
 }

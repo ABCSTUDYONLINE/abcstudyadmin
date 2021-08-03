@@ -14,7 +14,8 @@ const initialState = {
   showProfile: 0,
   isAvatar: false,
   sendSuccess: false,
-  confirmSuccess: false
+  confirmSuccess: false,
+  forgetPassValue: 0
 }
 
 export default function userReducer (state = initialState, action) {
@@ -83,6 +84,18 @@ export default function userReducer (state = initialState, action) {
 
     case userType.HIDE_PROFILE_SUCCESS:
       newState = Object.assign({}, state, { showProfile: 0 })
+      break
+
+    case userType.OTP_SEND_FORGET_PASS_SUCCESS:
+      newState = Object.assign({}, state, { forgetPassValue: 1 })
+      break
+
+    case userType.OTP_CONFIRM_FORGET_PASS_SUCCESS:
+      newState = Object.assign({}, state, { forgetPassValue: 2 })
+      break
+
+    case userType.FORGET_PASS_SUCCESS:
+      newState = Object.assign({}, state, { })
       break
 
     default:
