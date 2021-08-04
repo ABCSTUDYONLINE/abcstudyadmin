@@ -21,11 +21,8 @@ export default function PopupCate () {
     const localProfile = JSON.parse(localStorage.getItem('profile'))
     setProfile(localProfile)
     setRole(localProfile.role === 'teacher' ? 1 : 0)
-  }, [profileChange])
-
-  useEffect(() => {
     dispatch(getCategories(1, 100))
-  }, [])
+  }, [profileChange])
 
   const showModal = () => {
     setVisible(true)

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react'
-import { Table, Image, Button, Form, Select, Input, Modal, Upload } from 'antd'
+import { Table, Image, Button, Form, Select, Input, Modal, Upload, Alert } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse } from '../../../redux/courses/coursesAction'
@@ -33,30 +33,28 @@ export default function TableSrc (props) {
   const [visible, setVisible] = useState(false)
   const [courseIdUpdate, setCourseIdUpdate] = useState()
   const [isImage, setImage] = useState(false)
-  const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
   const firstUpdateProfile = React.useRef(true)
 
   useEffect(() => {
+    console.log('1')
     const localProfile = JSON.parse(localStorage.getItem('profile'))
-    setProfile(localProfile)
     setRole(localProfile.role === 'teacher' ? 1 : 0)
+    dispatch(getCategories(1, 100))
+    getDataCourses(localProfile.role === 'teacher' ? 1 : 0)
   }, [profileChange])
 
-  const getDataCourses = () => {
+  const getDataCourses = (role) => {
     dispatch(getCourses(role, page, limit))
   }
-
-  useEffect(() => {
-    dispatch(getCategories(1, 100))
-  }, [])
 
   useEffect(() => {
     if (firstUpdateProfile.current) {
       firstUpdateProfile.current = false
       return
     }
-    getDataCourses()
-  }, [role, isChanged])
+    console.log('2')
+    getDataCourses(role)
+  }, [isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
