@@ -30,13 +30,12 @@ export default function TableLes (props) {
   const [lessonIdUpdate, setLessonIdUpdate] = useState()
 
   const getDataLessons = () => {
-    console.log(topicId)
     dispatch(getLessons(topicId, page, limit))
   }
 
   useEffect(() => {
     getDataLessons()
-  }, [page, limit, isChanged])
+  }, [isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
