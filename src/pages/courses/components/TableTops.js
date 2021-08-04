@@ -30,7 +30,7 @@ export default function TableTops (props) {
 
   useEffect(() => {
     getDataCourses()
-  }, [isChanged])
+  }, [page, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)

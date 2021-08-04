@@ -28,7 +28,7 @@ export default function TableCate (props) {
   }
   useEffect(() => {
     getDataCategory()
-  }, [page, limit, isChanged])
+  }, [page, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)

@@ -16,7 +16,7 @@ export default function TableUsers (props) {
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(5)
+  const [limit] = useState(5)
   const [role, setRole] = useState('student')
 
   const getDataAuthUsers = () => {
@@ -24,7 +24,7 @@ export default function TableUsers (props) {
   }
   useEffect(() => {
     getDataAuthUsers()
-  }, [page, limit, role, isChanged])
+  }, [page, role, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)

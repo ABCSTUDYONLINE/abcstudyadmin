@@ -54,7 +54,7 @@ export default function TableSrc (props) {
     }
     console.log('2')
     getDataCourses(role)
-  }, [isChanged])
+  }, [page, isChanged])
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPage(pagination.current)
