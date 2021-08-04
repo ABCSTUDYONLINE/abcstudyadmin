@@ -1,12 +1,39 @@
-const _prefix = '@user/';
+const _prefix = '@user/'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   SIGN_IN: _prefix + 'SIGN_IN',
   SIGN_IN_SUCCESS: _prefix + 'SIGN_IN_SUCCESS',
+  SIGN_IN_ERROR: _prefix + 'SIGN_IN_ERROR',
+
+  GET_ME: _prefix + 'GET_ME',
+  GET_ME_SUCCESS: _prefix + 'GET_ME_SUCCESS',
 
   REGISTER: _prefix + 'REGISTER',
   REGISTER_SUCCESS: _prefix + 'REGISTER_SUCCESS',
+
+  UPDATE: _prefix + 'UPDATE',
+  UPDATE_SUCCESS: _prefix + 'UPDATE_SUCCESS',
+
+  OTP_SEND: _prefix + 'OTP_SEND',
+  OTP_SEND_SUCCESS: _prefix + 'OTP_SEND_SUCCESS',
+
+  OTP_CONFIRM: _prefix + 'OTP_CONFIRM',
+  OTP_CONFIRM_SUCCESS: _prefix + 'OTP_CONFIRM_SUCCESS',
+
+  OTP_SEND_FORGET_PASS: _prefix + 'OTP_SEND_FORGET_PASS',
+  OTP_SEND_FORGET_PASS_SUCCESS: _prefix + 'OTP_SEND_FORGET_PASS_SUCCESS',
+
+  OTP_CONFIRM_FORGET_PASS: _prefix + 'OTP_CONFIRM_FORGET_PASS',
+  OTP_CONFIRM_FORGET_PASS_SUCCESS: _prefix + 'OTP_CONFIRM_FORGET_PASS_SUCCESS',
+
+  FORGET_PASS: _prefix + 'FORGET_PASS',
+  FORGET_PASS_SUCCESS: _prefix + 'FORGET_PASS_SUCCESS',
+
+  UPDATE_AVATAR: _prefix + 'UPDATE_AVATAR',
+  UPDATE_AVATAR_SUCCESS: _prefix + 'UPDATE_AVATAR_SUCCESS',
+
+  CHANGE_PASSWORD: _prefix + 'CHANGE_PASSWORD',
 
   SIGN_OUT: _prefix + 'SIGN_OUT',
   SIGN_OUT_SUCCESS: _prefix + 'SIGN_OUT_SUCCESS',
@@ -19,4 +46,9 @@ export default {
 
   LOADING_SHOW: _prefix + 'LOADING_SHOW',
   LOADING_HIDE: _prefix + 'LOADING_HIDE',
-};
+
+  SHOW_PROFILE: _prefix + 'SHOW_PROFILE',
+  SHOW_PROFILE_SUCCESS: _prefix + 'SHOW_PROFILE_SUCCESS',
+  HIDE_PROFILE: _prefix + 'HIDE_PROFILE',
+  HIDE_PROFILE_SUCCESS: _prefix + 'HIDE_PROFILE_SUCCESS'
+}

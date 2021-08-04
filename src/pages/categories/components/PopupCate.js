@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { postCategories, getCategories } from '../../../redux/category/categoryAction';
+/* eslint-disable no-unused-vars */
+import React from 'react'
+import { Form, Input, Button, Modal, Select } from 'antd'
+import { useDispatch } from 'react-redux'
+import { postCategories } from '../../../redux/category/categoryAction'
 
-export default function PopupCate() {
+const { Option } = Select
 
-  const dispatch = useDispatch();
+export default function PopupCate () {
+  const dispatch = useDispatch()
 
-  const [visible, setVisible] = React.useState(false);
-
+  const [visible, setVisible] = React.useState(false)
 
   const showModal = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   const handleCancel = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   const onFinish = (values) => {
     dispatch(postCategories(values))
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   const onFinishFailed = (errorInfo) => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
+
   return (
 
     <div>
@@ -40,13 +42,13 @@ export default function PopupCate() {
         onCancel={handleCancel}
         okButtonProps={{
           style: {
-            display: "none",
-          },
+            display: 'none'
+          }
         }}
         cancelButtonProps={{
           style: {
-            display: "none",
-          },
+            display: 'none'
+          }
         }}
       >
         <Form
@@ -62,7 +64,10 @@ export default function PopupCate() {
             name="levelCategory"
             rules={[{ required: true, message: 'Please input level category!' }]}
           >
-            <Input />
+            <Select defaultValue='web'>
+              <Option value="web">web</Option>
+              <Option value="mobile">mobile</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item

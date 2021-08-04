@@ -1,28 +1,29 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import {makeStyles} from '@material-ui/core/styles';
+import { Snackbar } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        top: theme.spacing(9)
-    }
+  root: {
+    top: theme.spacing(9)
+  }
 }))
 
-export default function Notification(props) {
-    const { notify, setNotify } = props;
-    const classes = useStyles()
+export default function Notification (props) {
+  const { notify, setNotify } = props
+  const classes = useStyles()
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setNotify({
-            ...notify,
-            isOpen: false
-        })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
     }
-    return (
+    setNotify({
+      ...notify,
+      isOpen: false
+    })
+  }
+  return (
         <Snackbar
             className={classes.root}
             open={notify.isOpen}
@@ -35,5 +36,5 @@ export default function Notification(props) {
                 {notify.message}
             </Alert>
         </Snackbar>
-    )
+  )
 }

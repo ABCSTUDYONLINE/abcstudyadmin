@@ -1,10 +1,10 @@
-const _prefix = '@category/';
+const _prefix = '@category/'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   POST_CATEGORIES: _prefix + 'POST_CATEGORIES',
   POST_CATEGORIES_SUCCESS: _prefix + 'POST_CATEGORIES_SUCCESS',
-  
+
   PUT_CATEGORIES: _prefix + 'PUT_CATEGORIES',
   PUT_CATEGORIES_SUCCESS: _prefix + 'PUT_CATEGORIES_SUCCESS',
 
@@ -18,5 +18,5 @@ export default {
   GET_CATEGORIES_DETAIL_CATEGORY_SUCCESS: _prefix + 'GET_CATEGORIES_DETAIL_CATEGORY_SUCCESS',
 
   LOADING_SHOW: _prefix + 'LOADING_SHOW',
-  LOADING_HIDE: _prefix + 'LOADING_HIDE',
-};
+  LOADING_HIDE: _prefix + 'LOADING_HIDE'
+}

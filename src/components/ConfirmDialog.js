@@ -1,42 +1,43 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, IconButton } from '@material-ui/core'
-import Controls from "./controls/Controls";
-import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
-import {makeStyles} from '@material-ui/core/styles';
+import Controls from './controls/Controls'
+import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-    dialog: {
-        padding: theme.spacing(2),
-        position: 'absolute',
-        top: theme.spacing(5)
+  dialog: {
+    padding: theme.spacing(2),
+    position: 'absolute',
+    top: theme.spacing(5)
+  },
+  dialogTitle: {
+    textAlign: 'center'
+  },
+  dialogContent: {
+    textAlign: 'center'
+  },
+  dialogAction: {
+    justifyContent: 'center'
+  },
+  titleIcon: {
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.light,
+      cursor: 'default'
     },
-    dialogTitle: {
-        textAlign: 'center'
-    },
-    dialogContent: {
-        textAlign: 'center'
-    },
-    dialogAction: {
-        justifyContent: 'center'
-    },
-    titleIcon: {
-        backgroundColor: theme.palette.secondary.light,
-        color: theme.palette.secondary.main,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-            cursor: 'default'
-        },
-        '& .MuiSvgIcon-root': {
-            fontSize: '8rem',
-        }
+    '& .MuiSvgIcon-root': {
+      fontSize: '8rem'
     }
+  }
 }))
 
-export default function ConfirmDialog(props) {
-    const { confirmDialog, setConfirmDialog } = props;
-    const classes = useStyles()
+export default function ConfirmDialog (props) {
+  const { confirmDialog, setConfirmDialog } = props
+  const classes = useStyles()
 
-    return (
+  return (
         <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }}>
             <DialogTitle className={classes.dialogTitle}>
                 <IconButton disableRipple className={classes.titleIcon}>
@@ -62,5 +63,5 @@ export default function ConfirmDialog(props) {
                     onClick={confirmDialog.onConfirm} />
             </DialogActions>
         </Dialog>
-    )
+  )
 }

@@ -1,18 +1,18 @@
-import layoutType from './layoutType';
+import layoutType from './layoutType'
 
-export function showLoading() {
+export function showLoading () {
   return {
     type: layoutType.LOADING_SHOW
   }
 }
 
-export function hideLoading() {
+export function hideLoading () {
   return {
     type: layoutType.LOADING_HIDE
   }
 }
 
-export function handleError(payload) {
+export function handleError (payload) {
   return {
     type: layoutType.ERROR,
     payload: payload

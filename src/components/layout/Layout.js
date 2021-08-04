@@ -1,58 +1,56 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React from 'react'
 import {
-    CssBaseline
-} from "@material-ui/core";
-import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+  CssBaseline
+} from '@material-ui/core'
+import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import Header from '../header/Header'
 import Sidebar from '../sidebar/Sidebar'
 import useStyles from './styles'
-import { Route, Switch } from "react-router-dom";
-import Categories from '../../pages/categories/Categories'
-import Courses from '../../pages/courses/Courses'
-import Users from '../../pages/users/Users'
-import AuthenticationRoute from '../auth/AuthenticationRoute';
+import { Switch } from 'react-router-dom'
+import AuthenticationRoute from '../auth/AuthenticationRoute'
 
 const theme = createTheme({
-    palette: {
-        primary: {
-            light: "#7986cb",
-            main: "#3f51b5",
-        },
-        secondary: {
-            main: "#f50057",
-            light: "#ff4081",
-        },
-        background: {
-            default: "#f4f5fd",
-        }
+  palette: {
+    primary: {
+      light: '#7986cb',
+      main: '#3f51b5'
     },
-    shape: {
-        borderRadius: '12px',
+    secondary: {
+      main: '#f50057',
+      light: '#ff4081'
     },
-    overrides: {
-        MuiAppBar: {
-            root: {
-                transform: 'translateZ(0)'
-            }
-        }
-    },
-    props: {
-        MuiIconButton: {
-            disableRipple: true,
-        }
+    background: {
+      default: '#f4f5fd'
     }
+  },
+  shape: {
+    borderRadius: '12px'
+  },
+  overrides: {
+    MuiAppBar: {
+      root: {
+        transform: 'translateZ(0)'
+      }
+    }
+  },
+  props: {
+    MuiIconButton: {
+      disableRipple: true
+    }
+  }
 })
 
-function RouteWithSubRoutes(route) {
-    return (
+function RouteWithSubRoutes (route) {
+  return (
       <AuthenticationRoute {...route} />
-    );
-  }
+  )
+}
 
-export default function Layout({ routes }) {
-    const classes = useStyles();
+export default function Layout ({ routes }) {
+  const classes = useStyles()
 
-    return (
+  return (
         <ThemeProvider theme={theme} className={classes.root}>
             <CssBaseline />
             <Header />
@@ -68,5 +66,5 @@ export default function Layout({ routes }) {
                 </div>
             </div>
         </ThemeProvider>
-    );
+  )
 }

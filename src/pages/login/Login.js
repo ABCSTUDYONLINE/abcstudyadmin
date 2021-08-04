@@ -1,55 +1,157 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory } from "react-router-dom";
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Button, CircularProgress, Fade, Grid, TextField, Typography } from '@material-ui/core'
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect, useSelector } from 'react-redux'
+import PopupConfirm from './PopupConfirm'
+import PopupForgetPass from './PopupForgetPass'
+import { signIn, getMe } from '../../redux/user/userAction'
+import { LoadingDialog } from '../../components/LoadingDialog'
 
-import { signIn } from '../../redux/user/userAction';
+// styles
+import useStyles from './styles'
 
-//styles 
-import useStyles from './styles';
+// logo
+import logo from './logo.svg'
 
-//logo 
-import logo from './logo.svg';
+const Login = (props) => {
+  const dispatch = useDispatch()
 
+  const sendSuccess = useSelector(state => state.user.sendSuccess)
+  const confirmSuccess = useSelector(state => state.user.confirmSuccess)
+  const userLoading = useSelector(state => state.user.loading)
+  const forgetPassValue = useSelector(state => state.user.forgetPassValue)
 
-export default function Login() {
+  const history = useHistory()
+  let message = props.message
+  const token = props.token
+  const profile = props.profile
 
-    const dispatch = useDispatch();
+  const classes = useStyles()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const firstUpdateMessage = useRef(true)
+  const firstUpdateToken = useRef(true)
+  const firstUpdateProfile = useRef(true)
+  const firstUpdateSend = useRef(true)
+  const firstUpdateConfirm = useRef(true)
+  const firstUpdatePass = useRef(true)
+  const [isConfirm, setConfirm] = useState(null)
+  const [isShow, showConfirm] = useState(false)
+  const [isShowDialog, showShowDialog] = useState(false)
+  const [valueForgetPass, setValueForgetPass] = useState(0)
 
-    const history = useHistory();
-
-    const classes = useStyles();
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const login = () => {
-        setIsLoading(true);
-        setError(false);
-        if (username != "" && password != "") {
-            dispatch(signIn({
-                payload: {
-                    'username': username,
-                    'password': password
-                }, history, dispatch
-            }))
-        } else {
-            /* alert("Wrong username or password!") */
-            setError(true);
-            setIsLoading(false);
-        }
+  const login = () => {
+    setIsLoading(true)
+    setError(false)
+    if (userName !== '' && password !== '') {
+      dispatch(signIn({
+        payload: {
+          username: userName,
+          password: password
+        },
+        history,
+        dispatch
+      }))
+    } else {
+      alert('Wrong username or password!')
+      setError(true)
+      setIsLoading(false)
     }
+  }
 
-    useEffect(() => {
-        let token = localStorage.getItem('token')
-        if (token) {
-            history.push('/dashboard/categories')
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+  useEffect(() => {
+    const tokenExist = localStorage.getItem('token')
+    if (tokenExist) {
+      dispatch(getMe({ history }))
+    }
+  }, [])
 
-    return (
+  useEffect(() => {
+    if (firstUpdateMessage.current) {
+      firstUpdateMessage.current = false
+      return
+    }
+    console.log(message)
+    if (message === 'Please confirm user account! user unconfirm!') {
+      showConfirm(!isShow)
+      setConfirm(false)
+    }
+    if (message !== '') {
+      setError(true)
+      setIsLoading(false)
+    }
+  }, [message])
+
+  useEffect(() => {
+    if (firstUpdateSend.current) {
+      firstUpdateSend.current = false
+      return
+    }
+    showConfirm(!isShow)
+    setConfirm(true)
+  }, [sendSuccess])
+
+  useEffect(() => {
+    if (firstUpdateConfirm.current) {
+      firstUpdateConfirm.current = false
+      return
+    }
+    login()
+  }, [confirmSuccess])
+
+  useEffect(() => {
+    if (firstUpdateToken.current) {
+      firstUpdateToken.current = false
+      return
+    }
+    localStorage.setItem('token', token)
+    dispatch(getMe({ history }))
+  }, [token])
+
+  useEffect(() => {
+    if (firstUpdateProfile.current) {
+      firstUpdateProfile.current = false
+      return
+    }
+    switch (profile.role) {
+      case 'admin':
+        history.push('/dashboard/admin/categories')
+        break
+      case 'teacher':
+        history.push('/dashboard/teacher/courses')
+        break
+      default:
+        localStorage.removeItem('token')
+        localStorage.removeItem('profile')
+        message = 'Student cannot accesss!'
+        setError(true)
+        setIsLoading(false)
+        break
+    }
+  }, [profile])
+
+  useEffect(() => {
+    if (firstUpdatePass.current === true) {
+      firstUpdatePass.current = false
+      return
+    }
+    setValueForgetPass(forgetPassValue)
+    showShowDialog(!isShowDialog)
+  }, [forgetPassValue])
+
+  const forgetPass = () => {
+    setValueForgetPass(0)
+    showShowDialog(!isShowDialog)
+  }
+
+  return (
         <Grid container className={classes.container}>
+            <PopupForgetPass forgetPassValue={valueForgetPass} isShow={isShowDialog}/>
+            <PopupConfirm isConfirm={isConfirm} isShow={isShow}/>
             <div className={classes.logotypeContainer}>
                 <img src={logo} alt="logo" className={classes.logotypeImage} />
                 <Typography className={classes.logotypeText}>ABCStudy Admin</Typography>
@@ -60,31 +162,33 @@ export default function Login() {
                     <React.Fragment>
                         <Fade in={error}>
                             <Typography color="secondary" className={classes.messageError}>
-                                Something is wrong with your login or password!
+                                {message}
                             </Typography>
                         </Fade>
                         <TextField
                             id="username"
                             InputProps={{
-                                classes: {
-                                    underline: classes.textFieldUnderLine,
-                                    input: classes.textField
-                                }
+                              classes: {
+                                underline: classes.textFieldUnderLine,
+                                input: classes.textField
+                              },
+                              readOnly: isLoading
                             }}
-
-                            value={username}
+                            value={userName}
                             margin="normal"
-                            onChange={e => setUsername(e.target.value)}
-                            placeholder="Username"
+                            onChange={e => setUserName(e.target.value)}
+                            placeholder="User name"
+                            type="text"
                             fullWidth
                         />
                         <TextField
                             id="password"
                             InputProps={{
-                                classes: {
-                                    underline: classes.textFieldUnderLine,
-                                    input: classes.textField
-                                }
+                              classes: {
+                                underline: classes.textFieldUnderLine,
+                                input: classes.textField
+                              },
+                              readOnly: isLoading
                             }}
                             value={password}
                             margin="normal"
@@ -94,24 +198,44 @@ export default function Login() {
                             fullWidth
                         />
                         <div className={classes.formButtons}>
-                            {isLoading ? (<CircularProgress size={26} className={classes.loginLoader} />
-                            ) : (
+                            {isLoading
+                              ? (<CircularProgress size={26} className={classes.loginLoader} />
+                                )
+                              : (
+                                <>
                                 <Button
-                                    disabled={username.length === 0 || password.length === 0}
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                    onClick={() => login()}
+                                  disabled={userName.length === 0 || password.length === 0}
+                                  variant="contained"
+                                  color="primary"
+                                  size="large"
+                                  onClick={() => login()}
                                 >
-                                    Login
+                                  Login
                                 </Button>
-                            )}
-
+                                <Button
+                                  style={{ marginLeft: 10 }}
+                                  variant="contained"
+                                  color="primary"
+                                  size="large"
+                                  onClick={() => forgetPass()}
+                                >
+                                  Forget Pass
+                                </Button>
+                                </>
+                                )}
                         </div>
                     </React.Fragment>
                 </div>
             </div>
+            <LoadingDialog isLoading={userLoading === 1} />
         </Grid>
-
-    )
+  )
 }
+
+const mapStateToProps = (state) => ({
+  message: state.user.message,
+  token: state.user.token,
+  profile: state.user.profile
+})
+
+export default connect(mapStateToProps)(Login)

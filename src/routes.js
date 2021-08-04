@@ -1,17 +1,18 @@
 // import React from 'react';
-import Layout from './components/layout/Layout';
+import Layout from './components/layout/Layout'
 // import Register from './pages/register/Register';
-import NotFound from './pages/error/Error';
-import Login from './pages/login/Login';
-import Categories from './pages/categories/Categories';
-import Users from './pages/users/Users'; 
-import Courses from './pages/courses/Courses'; 
-import NewTeacher from './pages/new-teacher/NewTeacher'; 
+import NotFound from './pages/error/Error'
+import Login from './pages/login/Login'
+import Categories from './pages/categories/Categories'
+import Users from './pages/users/Users'
+import Courses from './pages/courses/Courses'
+import Promotions from './pages/promotions/Promotions'
+import NewTeacher from './pages/new-teacher/NewTeacher'
 const routes = [
   {
     path: '/login',
     exact: true,
-    component: Login,
+    component: Login
   },
   // {
   //   path: '/register',
@@ -19,38 +20,56 @@ const routes = [
   //   component: Register
   // },
   {
-    path: '/dashboard',
+    path: '/dashboard/admin',
     component: Layout,
     routes: [
       {
-        path: '/dashboard/courses',
+        path: '/dashboard/admin/courses',
         exact: true,
         auth: true,
         component: Courses
       },
       {
-        path: '/dashboard/users',
+        path: '/dashboard/admin/users',
         exact: true,
         auth: true,
         component: Users
       },
       {
-        path: '/dashboard/categories',
+        path: '/dashboard/admin/categories',
         exact: true,
         auth: true,
         component: Categories
       },
       {
-        path: '/dashboard/new-teacher',
+        path: '/dashboard/admin/new-teacher',
         exact: true,
         auth: true,
         component: NewTeacher
+      }
+    ]
+  },
+  {
+    path: '/dashboard/teacher',
+    component: Layout,
+    routes: [
+      {
+        path: '/dashboard/teacher/courses',
+        exact: true,
+        auth: true,
+        component: Courses
       },
+      {
+        path: '/dashboard/teacher/promotions',
+        exact: true,
+        auth: true,
+        component: Promotions
+      }
     ]
   },
   {
     component: NotFound
   }
-];
+]
 
-export default routes;
+export default routes
