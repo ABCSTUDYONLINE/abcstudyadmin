@@ -9,7 +9,7 @@ branches:
   - deployment
 
 script:
-  - npm test
+  # - npm test
   - npm run build
 
 notifications:
@@ -19,6 +19,10 @@ notifications:
       - khongthenho304@gmail.com
     on_success: always
     on_failure: always
+
+cache:
+    directories:
+        - "node_modules"
 
 deploy:
   provider: heroku
