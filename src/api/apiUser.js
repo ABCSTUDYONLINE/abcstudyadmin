@@ -80,6 +80,12 @@ const deleteAuthUser = async (userId) => {
   return res.data
 }
 
+const manageUser = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.put('/auth/operation', params)
+  return res.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,
@@ -94,5 +100,6 @@ export default {
   postAuthOtpConfirm,
   sendForgetPassword,
   confirmForgetPassword,
-  forgetPassword
+  forgetPassword,
+  manageUser
 }

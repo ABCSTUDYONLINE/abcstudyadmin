@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Radio } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAuthUsers, deleteAuthUser } from '../../../redux/user/userAction'
+import { getAuthUsers, deleteAuthUser, updateOperationUser } from '../../../redux/user/userAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
 
@@ -32,6 +32,10 @@ export default function TableUsers (props) {
 
   const onDelete = (userId) => {
     dispatch(deleteAuthUser(userId))
+  }
+
+  const updateOperation = (id, operation) => {
+    dispatch(updateOperationUser({ userId: id, operation: operation === 'enable' ? 'disable' : 'enable' }))
   }
 
   const columns = [
@@ -76,9 +80,10 @@ export default function TableUsers (props) {
     {
       title: 'Action',
       dataIndex: 'id',
-      render: (id) =>
+      render: (id, user) =>
         <div>
           <a style={{ cursor: 'pointer', color: '#ff6666', marginRight: 20 }} onClick={() => onDelete(id)}>delete</a>
+          <a style={{ cursor: 'pointer', color: user.operation === 'enable' ? '#DA251C' : '#5AC18E', marginRight: 20 }} onClick={() => updateOperation(id, user.operation)}>{user.operation === 'enable' ? 'lock' : 'unlock'}</a>
         </div>
     }
   ]

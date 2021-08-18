@@ -65,6 +65,10 @@ export default function coursesReducer (state = initialState, action) {
       newState = Object.assign({}, state, { isChanged: changed })
       break
 
+    case coursesType.UPDATE_OPERATION_COURSE_SUCCESS:
+      newState = Object.assign({}, state, { isChanged: changed })
+      break
+
     default:
       newState = state
   }

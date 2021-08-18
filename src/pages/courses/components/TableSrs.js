@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Image, Button, Form, Select, Input, Modal, Upload, Alert } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse } from '../../../redux/courses/coursesAction'
+import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse, updateOperationCourse } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
 import * as moment from 'moment'
@@ -145,6 +145,10 @@ export default function TableSrc (props) {
     return e && e.fileList
   }
 
+  const updateOperation = (id, operation) => {
+    dispatch(updateOperationCourse({ courseId: id, operation: operation === 'enable' ? 'disable' : 'enable' }))
+  }
+
   const columns = [
     {
       title: 'Image',
@@ -217,6 +221,7 @@ export default function TableSrc (props) {
           {role === 1 ? <a style={{ cursor: 'pointer', color: '#314CDB', marginRight: 20 }} onClick={() => onEdit(id, course)}>edit</a> : null}
           {role === 1 ? <a style={{ cursor: 'pointer', color: '#5FDF28', marginRight: 20 }} onClick={() => toTopic(id)}>topics</a> : null}
           {role === 1 ? <a style={course.status !== 'doing' ? { pointerEvents: 'none', opacity: '0.4', color: '#db9514', marginRight: 20 } : { cursor: 'pointer', color: '#db9514', marginRight: 20 }} onClick={() => toPublic(id)}>publish</a> : null}
+          {role === 0 ? <a style={{ cursor: 'pointer', color: course.operation === 'enable' ? '#DA251C' : '#5AC18E', marginRight: 20 }} onClick={() => updateOperation(id, course.operation)}>{course.operation === 'enable' ? 'lock' : 'unlock'}</a> : null}
         </div>
     }
   ]

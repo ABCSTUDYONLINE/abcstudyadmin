@@ -23,7 +23,8 @@ export default function * userSaga () {
     postAuthOtpConfirm(),
     postOtpSendForgetPass(),
     postOtpConfirmForgetPass(),
-    postForgetPass()
+    postForgetPass(),
+    updateOperationUser()
   ])
 }
 
@@ -357,5 +358,31 @@ function * hideProfile () {
     try {
       yield put({ type: userType.HIDE_PROFILE_SUCCESS })
     } catch (e) { console.log(e) }
+  })
+}
+
+function * updateOperationUser () {
+  yield takeEvery(userType.UPDATE_OPERATION_USER, function * ({ payload }) {
+    try {
+      yield put({ type: userType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpUser.manageUser, payload) // api cal
+      const { data, message } = res
+      if (data !== null) {
+        yield put({ type: userType.UPDATE_OPERATION_USER_SUCCESS, payload: data })
+        Modal.success({
+          title: 'Successfull',
+          content: `You have ${payload.operation} this user successful!`
+        })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: userType.LOADING_HIDE, payload: {} })
+    }
   })
 }

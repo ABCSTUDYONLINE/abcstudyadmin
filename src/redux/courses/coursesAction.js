@@ -72,3 +72,10 @@ export function publicCourse (payload) {
     payload: payload
   }
 }
+
+export function updateOperationCourse (payload) {
+  return {
+    type: coursesType.UPDATE_OPERATION_COURSE,
+    payload: payload
+  }
+}

@@ -38,6 +38,12 @@ const publicCourse = async (params) => {
   return res.data
 }
 
+const manageCourse = async (params) => {
+  localStorage.setItem('contentType', 'application/json')
+  const res = await API.put('/courses/operation', params)
+  return res.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   postCourses,
@@ -45,5 +51,6 @@ export default {
   putImageCourses,
   getCourses,
   deleteCourses,
-  publicCourse
+  publicCourse,
+  manageCourse
 }

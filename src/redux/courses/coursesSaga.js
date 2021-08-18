@@ -15,7 +15,8 @@ export default function * userSaga () {
     gobackTopic(),
     gotoLesson(),
     gobackCourse(),
-    publicCourse()
+    publicCourse(),
+    updateOperationCourse()
   ])
 }
 
@@ -204,5 +205,32 @@ function * gobackCourse () {
     try {
       yield put({ type: coursesType.GO_BACK_COURSE_SUCCESS, payload: {} })
     } catch (e) { console.log(e) }
+  })
+}
+
+function * updateOperationCourse () {
+  yield takeEvery(coursesType.UPDATE_OPERATION_COURSE, function * ({ payload }) {
+    try {
+      yield put({ type: coursesType.LOADING_SHOW, payload: {} })
+      const res = yield call(httpCourses.manageCourse, payload)
+      const { data, message } = res
+      console.log(res)
+      if (data !== null) {
+        Modal.success({
+          title: 'Success',
+          content: `You have ${payload.operation} this course successfully`
+        })
+        yield put({ type: coursesType.UPDATE_OPERATION_COURSE_SUCCESS, payload: {} })
+      } else {
+        Modal.error({
+          title: 'Error',
+          content: `${message}!`
+        })
+      }
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    } catch (e) {
+      console.log(e)
+      yield put({ type: coursesType.LOADING_HIDE, payload: {} })
+    }
   })
 }

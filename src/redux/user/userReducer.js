@@ -98,6 +98,10 @@ export default function userReducer (state = initialState, action) {
       newState = Object.assign({}, state, { })
       break
 
+    case userType.UPDATE_OPERATION_USER_SUCCESS:
+      newState = Object.assign({}, state, { isChanged: changed })
+      break
+
     default:
       newState = state
   }

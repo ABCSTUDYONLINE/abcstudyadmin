@@ -115,3 +115,10 @@ export function hideProfile () {
     type: userType.HIDE_PROFILE
   }
 }
+
+export function updateOperationUser (payload) {
+  return {
+    type: userType.UPDATE_OPERATION_USER,
+    payload: payload
+  }
+}
