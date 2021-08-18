@@ -49,6 +49,10 @@ function * getMe () {
       const res = yield call(httpUser.getMe) // api call
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         localStorage.setItem('profile', JSON.stringify(data))
         yield put({ type: userType.GET_ME_SUCCESS, payload: data })
       } else {
@@ -94,6 +98,10 @@ function * updateUser () {
       const res = yield call(httpUser.updateUser, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         localStorage.setItem('profile', JSON.stringify(data))
         yield put({ type: userType.UPDATE_SUCCESS, payload: data })
         Modal.success({
@@ -121,6 +129,10 @@ function * postAuthOtpSend () {
       const res = yield call(httpUser.postAuthOtpSend, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         localStorage.setItem('email', JSON.stringify(payload.email))
         yield put({ type: userType.OTP_SEND_SUCCESS, payload: data })
       } else {
@@ -144,6 +156,10 @@ function * postAuthOtpConfirm () {
       const res = yield call(httpUser.postAuthOtpConfirm, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         localStorage.removeItem('email')
         yield put({ type: userType.OTP_CONFIRM_SUCCESS, payload: data })
       } else {
@@ -248,6 +264,10 @@ function * updateAvatar () {
       const res = yield call(httpUser.updateAvatar, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         localStorage.setItem('profile', JSON.stringify(data))
         yield put({ type: userType.UPDATE_AVATAR_SUCCESS, payload: data })
         Modal.success({
@@ -275,6 +295,10 @@ function * changePassword () {
       const res = yield call(httpUser.changePassword, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.info({
           title: 'Successfull',
           content: 'Change password successful. Please login again!',
@@ -304,6 +328,10 @@ function * getAuthUsers () {
       const res = yield call(httpUser.getAuthUsers, { page, limit, role })
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: userType.GET_AUTT_USERS_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
       } else {
         Modal.error({
@@ -326,6 +354,10 @@ function * deleteAuthUser () {
       const res = yield call(httpUser.deleteAuthUser, userId) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: userType.DELETE_AUTH_USERS_SUCCESS, payload: res })
         Modal.success({
           title: 'Successfull',
@@ -368,6 +400,10 @@ function * updateOperationUser () {
       const res = yield call(httpUser.manageUser, payload) // api cal
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: userType.UPDATE_OPERATION_USER_SUCCESS, payload: data })
         Modal.success({
           title: 'Successfull',

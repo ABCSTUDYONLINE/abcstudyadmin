@@ -8,8 +8,10 @@ const setup = (instance) => {
   instance.interceptors.request.use(
     function (config) {
       const token = localStorage.getItem('token')
+      const refreshToken = localStorage.getItem('refreshToken')
       if (token) {
         config.headers.authorization = `Bearer ${token}`
+        config.headers.refresh = refreshToken
       }
       return config
     },

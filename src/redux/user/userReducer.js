@@ -5,6 +5,7 @@ import userType from './userType'
 const initialState = {
   loading: 0,
   token: '',
+  refreshToken: '',
   message: '',
   userId: '',
   users: [],
@@ -25,7 +26,7 @@ export default function userReducer (state = initialState, action) {
   switch (type) {
     case userType.SIGN_IN_SUCCESS:
       const { data } = payload
-      newState = Object.assign({}, state, { token: data.accessToken })
+      newState = Object.assign({}, state, { token: data.accessToken, refreshToken: data.refreshToken })
       break
 
     case userType.SIGN_IN_ERROR:
@@ -60,6 +61,7 @@ export default function userReducer (state = initialState, action) {
     case userType.SIGN_OUT_SUCCESS:
       localStorage.removeItem('token')
       localStorage.removeItem('profile')
+      localStorage.removeItem('refreshToken')
       break
 
     case userType.GET_AUTT_USERS_SUCCESS:

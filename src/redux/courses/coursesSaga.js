@@ -27,6 +27,10 @@ function * postCourses () {
       const res = yield call(httpCourses.postCourses, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have added new courses successfully'
@@ -54,6 +58,10 @@ function * putCourses () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated courses successfully'
@@ -81,6 +89,10 @@ function * putImageCourses () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated image courses successfully'
@@ -129,6 +141,10 @@ function * deleteCourses () {
       const res = yield call(httpCourses.deleteCourses, courseId)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have deleted courses successfully'
@@ -155,6 +171,10 @@ function * publicCourse () {
       const res = yield call(httpCourses.publicCourse, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have public this course successfully'
@@ -216,6 +236,10 @@ function * updateOperationCourse () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: `You have ${payload.operation} this course successfully`

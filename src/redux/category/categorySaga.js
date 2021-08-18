@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { takeEvery, all, put, call } from 'redux-saga/effects'
 import categoryType from './categoryType'
 import httpCategory from '../../api/apiCategory'
@@ -20,6 +21,10 @@ function * postCategories () {
       const res = yield call(httpCategory.postCategories, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have added new category successfully'
@@ -47,6 +52,10 @@ function * putCategories () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated category successfully'
@@ -96,6 +105,10 @@ function * deleteCategories () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have deleted category successfully'

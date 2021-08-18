@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { takeEvery, all, put, call } from 'redux-saga/effects'
 import lessonsType from './lessonsType'
 import httpLessons from '../../api/apiLessons'
@@ -19,6 +20,10 @@ function * postTopic () {
       const res = yield call(httpLessons.postLesson, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have added new lesson successfully'
@@ -46,6 +51,10 @@ function * putTopic () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated lesson successfully'
@@ -72,6 +81,10 @@ function * getLessons () {
       const res = yield call(httpLessons.getLessons, { topicId, page, limit })
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: lessonsType.GET_LESSONS_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
       } else {
         Modal.error({
@@ -94,6 +107,10 @@ function * deleteLesson () {
       const res = yield call(httpLessons.deleteLesson, lessonId)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have deleted lesson successfully'

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { takeEvery, all, put, call } from 'redux-saga/effects'
 import topicsType from './topicsType'
 import httpTopics from '../../api/apiTopics'
@@ -19,6 +20,10 @@ function * postTopics () {
       const res = yield call(httpTopics.postTopics, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have added new topic successfully'
@@ -46,6 +51,10 @@ function * putTopics () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated topic successfully'
@@ -72,6 +81,10 @@ function * getTopics () {
       const res = yield call(httpTopics.getTopics, { courseId, page, limit })
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: topicsType.GET_TOPICS_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
       } else {
         Modal.error({
@@ -94,6 +107,10 @@ function * deleteTopics () {
       const res = yield call(httpTopics.deleteTopics, topicId)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have deleted topic successfully'

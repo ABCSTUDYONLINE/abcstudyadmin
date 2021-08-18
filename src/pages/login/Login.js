@@ -26,6 +26,7 @@ const Login = (props) => {
   const history = useHistory()
   let message = props.message
   const token = props.token
+  const refreshToken = props.refreshToken
   const profile = props.profile
 
   const classes = useStyles()
@@ -65,7 +66,8 @@ const Login = (props) => {
 
   useEffect(() => {
     const tokenExist = localStorage.getItem('token')
-    if (tokenExist) {
+    const refreshTokenExist = localStorage.getItem('refreshToken')
+    if (tokenExist && refreshTokenExist) {
       dispatch(getMe({ history }))
     }
   }, [])
@@ -108,7 +110,10 @@ const Login = (props) => {
       firstUpdateToken.current = false
       return
     }
+    console.log(token)
+    console.log(refreshToken)
     localStorage.setItem('token', token)
+    localStorage.setItem('refreshToken', refreshToken)
     dispatch(getMe({ history }))
   }, [token])
 
@@ -127,6 +132,7 @@ const Login = (props) => {
       default:
         localStorage.removeItem('token')
         localStorage.removeItem('profile')
+        localStorage.removeItem('refreshToken')
         message = 'Student cannot accesss!'
         setError(true)
         setIsLoading(false)
@@ -235,6 +241,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
   message: state.user.message,
   token: state.user.token,
+  refreshToken: state.user.refreshToken,
   profile: state.user.profile
 })
 

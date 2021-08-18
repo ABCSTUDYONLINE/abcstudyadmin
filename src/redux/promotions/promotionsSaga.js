@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { takeEvery, all, put, call } from 'redux-saga/effects'
 import promotionsType from './promotionsType'
 import httpPromotion from '../../api/apiPromotion'
@@ -19,6 +20,10 @@ function * postPromotion () {
       const res = yield call(httpPromotion.postPromotion, payload)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have added promotion successfully'
@@ -46,6 +51,10 @@ function * putPromotion () {
       const { data, message } = res
       console.log(res)
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have updated promotion successfully'
@@ -72,6 +81,10 @@ function * getPromotions () {
       const res = yield call(httpPromotion.getPromotions, { page, limit })
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         yield put({ type: promotionsType.GET_PROMOTIONS_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
       } else {
         Modal.error({
@@ -94,6 +107,10 @@ function * deletePromotion () {
       const res = yield call(httpPromotion.deletePromotion, promotionId)
       const { data, message } = res
       if (data !== null) {
+        if (data.newToken !== undefined &&
+          data.newToken !== null) {
+          localStorage.setItem('token', data.newToken)
+        }
         Modal.success({
           title: 'Success',
           content: 'You have deleted promotion successfully'
