@@ -6,10 +6,12 @@ import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLessons, deleteLesson, putLesson } from '../../../redux/lessons/lessonsAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
-import * as moment from 'moment'
+import moment from 'moment'
 // logo
 import logo from '../../login/logo.svg'
 import { InboxOutlined } from '@ant-design/icons'
+import ReactPlayer from 'react-player'
+
 const { Dragger } = Upload
 
 const { Option } = Select
@@ -91,6 +93,26 @@ export default function TableLes (props) {
   }
 
   const columns = [
+    {
+      title: 'Video',
+      dataIndex: 'videoLink',
+      key: 'videoLink',
+      sorter: true,
+      render: (videoLink) => <dev>
+        <ReactPlayer
+          url={videoLink}
+          controls
+          playing = {false}
+          config={{
+            file: {
+              attributes: {
+                disablepictureinpicture: 'true',
+                controlsList: 'nodownload',
+                onContextMenu: (e) => e.preventDefault()
+              }
+            }
+          }}/></dev>
+    },
     {
       title: 'Lesson Name',
       dataIndex: 'lessonName',
