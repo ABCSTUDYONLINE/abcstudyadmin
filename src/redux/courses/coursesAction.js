@@ -50,9 +50,10 @@ export function putImageCourses (payload) {
   }
 }
 
-export function getCourses (owner, page, limit) {
+export function getCourses (teacherId, owner, page, limit) {
   return {
     type: coursesType.GET_COURSES,
+    teacherId: teacherId,
     owner: owner,
     page: page,
     limit: limit

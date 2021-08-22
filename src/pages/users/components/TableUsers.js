@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuthUsers, deleteAuthUser, updateOperationUser } from '../../../redux/user/userAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
-import * as moment from 'moment'
+import moment from 'moment'
 
 export default function TableUsers (props) {
   const dataCategory = useSelector(state => state.user.users)

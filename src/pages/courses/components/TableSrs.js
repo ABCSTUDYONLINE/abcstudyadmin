@@ -7,9 +7,10 @@ import 'antd/dist/antd.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse, updateOperationCourse } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
+import { getAuthUsers } from '../../../redux/user/userAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
 import moment from 'moment'
-import { EditorState, convertToRaw, ContentState } from 'draft-js'
+import { EditorState, ContentState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
 import { Editor } from 'react-draft-wysiwyg'
@@ -31,6 +32,7 @@ export default function TableSrc (props) {
   const dataCategory = useSelector(state => state.category.categories)
   const isLoading = useSelector(state => state.courses.loading)
   const profileChange = useSelector(state => state.user.profile)
+  const teachers = useSelector(state => state.user.users)
   const dispatch = useDispatch()
 
   const [page, setPage] = useState(1)
@@ -47,11 +49,14 @@ export default function TableSrc (props) {
     const localProfile = JSON.parse(localStorage.getItem('profile'))
     setRole(localProfile.role === 'teacher' ? 1 : 0)
     dispatch(getCategories(1, 100))
+    if (localProfile.role !== 'teacher') {
+      dispatch(getAuthUsers(1, 100, 'teacher'))
+    }
     getDataCourses(localProfile.role === 'teacher' ? 1 : 0)
   }, [profileChange])
 
   const getDataCourses = (role) => {
-    dispatch(getCourses(role, page, limit))
+    dispatch(getCourses('empty', role, page, limit))
   }
 
   useEffect(() => {
@@ -164,6 +169,11 @@ export default function TableSrc (props) {
     setContentChange(editorState)
   }
 
+  function handleChange (value) {
+    console.log(`selected ${value}`)
+    dispatch(getCourses(value === undefined ? 'empty' : value, role, 1, limit))
+  }
+
   const columns = [
     {
       title: 'Image',
@@ -243,6 +253,21 @@ export default function TableSrc (props) {
 
   return (
     <div>
+      { role === 0
+        ? <Select style={{ display: 'flex', float: 'left', marginBottom: 10, width: 200 }}
+        placeholder="Search to Select"
+        allowClear filterOption={(inputValue, option) => option.props.children
+          .toString()
+          .toLowerCase()
+          .includes(inputValue.toLowerCase())}
+                  showSearch
+                  onChange={handleChange}>
+          {teachers.map(option => (
+            <Option value={option.id}>{`${option.firstName} ${option.lastName}`}</Option>
+          ))}
+      </Select>
+        : null
+      }
       <Table columns={ role === 1
         ? columns.filter((item, itemIndex) => itemIndex !== 2)
         : columns} dataSource={dataCourse} onChange={onChange} pagination={{

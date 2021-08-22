@@ -21,8 +21,8 @@ const putImageCourses = async (params) => {
 
 const getCourses = async (params) => {
   localStorage.setItem('contentType', 'application/json')
-  const { owner, page, limit } = params
-  const res = await API.get(`/courses?owner=${owner}&page=${page}&limit=${limit}`)
+  const { teacherId, owner, page, limit } = params
+  const res = await API.get(`/courses?teacherId=${teacherId}&owner=${owner}&page=${page}&limit=${limit}`)
   return res.data
 }
 

@@ -113,10 +113,10 @@ function * putImageCourses () {
 }
 
 function * getCourses () {
-  yield takeEvery(coursesType.GET_COURSES, function * ({ owner, page, limit }) {
+  yield takeEvery(coursesType.GET_COURSES, function * ({ teacherId, owner, page, limit }) {
     try {
       yield put({ type: coursesType.LOADING_SHOW, payload: {} })
-      const res = yield call(httpCourses.getCourses, { owner, page, limit })
+      const res = yield call(httpCourses.getCourses, { teacherId, owner, page, limit })
       const { data, message } = res
       if (data !== null) {
         yield put({ type: coursesType.GET_COURSES_SUCCESS, payload: { data: res.data.list, total: res.data.total } })
