@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../../../redux/category/categoryAction'
 import { postCourses } from '../../../redux/courses/coursesAction'
 import { UploadOutlined } from '@ant-design/icons'
+import draftToHtml from 'draftjs-to-html'
+import { Editor } from 'react-draft-wysiwyg'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 const { Option } = Select
 
@@ -16,6 +19,7 @@ export default function PopupCate () {
   const profileChange = useSelector(state => state.user.profile)
   const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
   const [role, setRole] = useState(0)
+  const [contentChange, setContentChange] = useState(null)
 
   useEffect(() => {
     const localProfile = JSON.parse(localStorage.getItem('profile'))
@@ -38,9 +42,7 @@ export default function PopupCate () {
     formData.append('categoryId', values.categoryId)
     formData.append('courseName', values.courseName)
     formData.append('shortCourseDescription', values.shortCourseDescription)
-    formData.append('detailCourseDescription', values.detailCourseDescription)
-    formData.append('whatWillLearn', values.whatWillLearn)
-    formData.append('requirements', values.requirements)
+    formData.append('content', draftToHtml(values.content))
     formData.append('fee', values.fee)
     dispatch(postCourses(formData))
     setVisible(false)
@@ -66,6 +68,11 @@ export default function PopupCate () {
     return e && e.fileList
   }
 
+  const onEditorStateChange = (editorState) => {
+    console.log(editorState.getCurrentContent())
+    setContentChange(editorState)
+  }
+
   return (
     <div>
       {role === 1
@@ -79,6 +86,7 @@ export default function PopupCate () {
         title="New course"
         visible={visible}
         onCancel={handleCancel}
+        width='60%'
         okButtonProps={{
           style: {
             display: 'none'
@@ -143,30 +151,18 @@ export default function PopupCate () {
             rules={[{ required: true, message: 'Please input short course description!' }]}
           >
             <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Detail course description"
-            name="detailCourseDescription"
-            rules={[{ required: true, message: 'Please input detail coure description!' }]}
+          </Form.Item><Form.Item
+            label="Content"
+            name="content"
+            rules={[{ required: true, message: 'Please input content!' }]}
           >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="What will learn"
-            name="whatWillLearn"
-            rules={[{ required: true, message: 'Please input what will learn!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Requirements"
-            name="requirements"
-            rules={[{ required: true, message: 'Please input requirements!' }]}
-          >
-            <Input />
+          <Editor
+            editorState={contentChange}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            onEditorStateChange={(editorState) => onEditorStateChange(editorState)}
+          />
           </Form.Item>
 
           <Form.Item

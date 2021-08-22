@@ -8,7 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, deleteCourses, putCourses, putImageCourses, gotoTopic, publicCourse, updateOperationCourse } from '../../../redux/courses/coursesAction'
 import { getCategories } from '../../../redux/category/categoryAction'
 import { LoadingDialog } from '../../../components/LoadingDialog'
-import * as moment from 'moment'
+import moment from 'moment'
+import { EditorState, convertToRaw, ContentState } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import htmlToDraft from 'html-to-draftjs'
+import { Editor } from 'react-draft-wysiwyg'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+
 // logo
 import logo from '../../login/logo.svg'
 import { InboxOutlined } from '@ant-design/icons'
@@ -34,6 +40,7 @@ export default function TableSrc (props) {
   const [courseIdUpdate, setCourseIdUpdate] = useState()
   const [isImage, setImage] = useState(false)
   const firstUpdateProfile = React.useRef(true)
+  const [contentChange, setContentChange] = useState(null)
 
   useEffect(() => {
     console.log('1')
@@ -74,15 +81,20 @@ export default function TableSrc (props) {
 
   const onEdit = (idCategory, course) => {
     setCourseIdUpdate(idCategory)
+    const contentBlock = htmlToDraft(course.content)
+    let content = EditorState.createEmpty()
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
+      content = EditorState.createWithContent(contentState)
+    }
     form.setFieldsValue({
       categoryId: course.category.id,
       courseName: course.courseName,
       shortCourseDescription: course.shortCourseDescription,
-      detailCourseDescription: course.detailCourseDescription,
-      whatWillLearn: course.whatWillLearn,
-      requirements: course.requirements,
+      // content: convertToRaw(content.getCurrentContent()),
       fee: course.fee
     })
+    setContentChange(content)
     setImage(false)
     setVisible(true)
   }
@@ -116,9 +128,7 @@ export default function TableSrc (props) {
           }),
           courseName: values.courseName,
           shortCourseDescription: values.shortCourseDescription,
-          detailCourseDescription: values.detailCourseDescription,
-          whatWillLearn: values.whatWillLearn,
-          requirements: values.requirements,
+          content: draftToHtml(values.content),
           fee: values.fee.toString()
         }))
     }
@@ -147,6 +157,11 @@ export default function TableSrc (props) {
 
   const updateOperation = (id, operation) => {
     dispatch(updateOperationCourse({ courseId: id, operation: operation === 'enable' ? 'disable' : 'enable' }))
+  }
+
+  const onEditorStateChange = (editorState) => {
+    console.log(editorState.getCurrentContent())
+    setContentChange(editorState)
   }
 
   const columns = [
@@ -239,6 +254,7 @@ export default function TableSrc (props) {
         title={isImage ? 'Update coure image' : 'Update course'}
         visible={visible}
         onCancel={handleCancel}
+        width='60%'
         okButtonProps={{
           style: {
             display: 'none'
@@ -308,23 +324,17 @@ export default function TableSrc (props) {
                 >
                   <Input />
                 </Form.Item><Form.Item
-                  label="Detail course description"
-                  name="detailCourseDescription"
-                  rules={[{ required: true, message: 'Please input detail coure description!' }]}
+                  label="Content"
+                  name="content"
+                  rules={[{ required: true, message: 'Please input content!' }]}
                 >
-                  <Input />
-                </Form.Item><Form.Item
-                  label="What will learn"
-                  name="whatWillLearn"
-                  rules={[{ required: true, message: 'Please input what will learn!' }]}
-                >
-                  <Input />
-                </Form.Item><Form.Item
-                  label="Requirements"
-                  name="requirements"
-                  rules={[{ required: true, message: 'Please input requirements!' }]}
-                >
-                  <Input />
+                  <Editor
+                    editorState={contentChange}
+                    toolbarClassName="toolbarClassName"
+                    wrapperClassName="wrapperClassName"
+                    editorClassName="editorClassName"
+                    onEditorStateChange={(editorState) => onEditorStateChange(editorState)}
+                    />
                 </Form.Item><Form.Item
                   label="Fee"
                   name="fee"
